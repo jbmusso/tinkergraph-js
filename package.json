@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/gulthor/tinkergraph-js",
   "dependencies": {
+    "es6-shim": "^0.18.0",
     "gremlin-core-js": "gulthor/gremlin-core-js",
     "lazy.js": "^0.3.2",
     "lodash": "^2.4.1",
