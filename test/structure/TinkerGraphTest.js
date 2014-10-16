@@ -99,11 +99,8 @@ describe('Graph', function() {
   });
 
 
-  describe.only('traversals', function() {
+  describe('traversals', function() {
     describe('.V() #', function() {
-      // beforeEach(function() {
-      // });
-
       it('should retrieve all vertices from the graph', function() {
         var g = TinkerGraph.open();
         // Add dummy vertices
@@ -126,25 +123,46 @@ describe('Graph', function() {
     describe('.V().out() #', function() {
       it('should retrieve outgoing adjacent vertices', function() {
         var g = TinkerGraph.open();
-        // Add dummy vertices
+
         var alice = g.addVertex('name', 'alice');
         var bob = g.addVertex('name', 'bob');
         var dude = g.addVertex('name', 'dude');
+        var foo = g.addVertex('name', 'foo');
 
-        alice.addEdge('knows', dude);
         alice.addEdge('likes', dude);
-        bob.addEdge('likes', dude);
+        bob.addEdge('likes', foo);
 
         var count = 0;
 
         g.V().out().forEach(function(vertex) {
+          ++count;
           assert.isDefined(vertex);
           assert.equal(vertex.constructor.name, 'TinkerVertex');
-          assert.equal(vertex.id, 2);
-          count++;
         });
 
-        assert.equal(count, 3);
+        assert.equal(count, 2);
+      });
+    });
+
+    describe('.V().out().out() #', function() {
+      it('should retrieve outgoing adjacent vertices', function() {
+        var g = TinkerGraph.open();
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
+
+        alice.addEdge('likes', bob);
+        bob.addEdge('likes', dude);
+
+        var count = 0;
+
+        g.V().out().out().forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+        });
+
+        assert.equal(count, 1);
       });
     });
   });
