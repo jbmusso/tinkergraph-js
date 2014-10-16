@@ -132,7 +132,6 @@ TinkerHelper.getEdgesFromGraph = function() { // JS specific
 };
 
 TinkerHelper.getVertices = function(structure, direction, branchFactor, labels) {
-  console.log('  ==TinkerHelper.getVertices()==');
   var vertex;
   var edge;
   var graph;
@@ -153,7 +152,6 @@ TinkerHelper.getVertices = function(structure, direction, branchFactor, labels) 
 };
 
 TinkerHelper.getVerticesFromVertex = function(vertex, direction, branchFactor, labels) { // JS specific method
-  console.log('  ==TinkerHelper.getVerticesFromVertex==');
   if (direction !== "both") {
     var edges = TinkerHelper.getEdges(vertex, direction, branchFactor, labels);
 

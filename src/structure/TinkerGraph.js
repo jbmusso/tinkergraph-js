@@ -85,9 +85,7 @@ TinkerGraph.prototype.of = function() {
 };
 
 TinkerGraph.prototype.getIndexedKeys = function(elementClass) {
-  // console.log('==TinkerGraph.getIndexedKeys==', elementClass.name);
-  // console.log(elementClass);
-
+  // todo: remove switch?
   switch (elementClass.name) {
     case 'Vertex':
       return this.vertexIndex.getIndexedKeys();

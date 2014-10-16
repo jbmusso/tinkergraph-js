@@ -12,7 +12,6 @@ var TinkerHelper = require('../../../structure/TinkerHelper');
 
 
 function TinkerGraphStep(traversal, returnClass) {
-  console.log('==TinkerGraphStep.constructor==');
   this.hasContainers = [];
   GraphStep.call(this, traversal, returnClass);
 }
@@ -20,7 +19,6 @@ function TinkerGraphStep(traversal, returnClass) {
 inherits(TinkerGraphStep, GraphStep);
 
 TinkerGraphStep.prototype.generateTraverserIterator = function(trackPaths) {
-  console.log('==TinkerGraphStep.generateTraverserIterator==');
   if (this.returnClass === Vertex) { //todo: improve check?
     this.start = this.vertices();
   } else {
@@ -31,7 +29,6 @@ TinkerGraphStep.prototype.generateTraverserIterator = function(trackPaths) {
 };
 
 TinkerGraphStep.prototype.edges = function() {
-  console.log('  ==TinkerGraphStep.edges()==');
   var indexedContainer = this.getIndexKey(Edge);
   var edgeStream;
   var iterator;
@@ -52,7 +49,6 @@ TinkerGraphStep.prototype.edges = function() {
 };
 
 TinkerGraphStep.prototype.vertices = function() {
-  console.log('  ==TinkerGraphStep.vertices()==');
   var indexedContainer = this.getIndexKey(Vertex);
   var graph = this.traversal.getSideEffects().getGraph();
   var vertices;
@@ -66,19 +62,16 @@ TinkerGraphStep.prototype.vertices = function() {
     vertices = TinkerHelper.queryVertexIndex(graph, indexedContainer.key, indexedContainer.value);
   }
 
-  // vertexStream = _(vertices);
-  // console.log(vertexStream);
   iterator = vertices.filter(function(vertex) {
     var test = HasContainer.testAll(vertex, self.hasContainers);
     return test;
-  }).values(); // ES6 iterator
+  }).values(); // returns an ES6 iterator
 
 
   return iterator;
 };
 
 TinkerGraphStep.prototype.getIndexKey = function(indexedClass) {
-  // console.log('==TinkerGraphStep.getIndexKey==');
   var graph = this.traversal.getSideEffects().getGraph();
   var indexedKeys = graph.getIndexedKeys(indexedClass);
 

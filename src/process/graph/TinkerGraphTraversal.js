@@ -7,7 +7,6 @@ var TinkerGraphStrategy = require('./strategy/TinkerGraphStepStrategy');
 
 
 function TinkerGraphTraversal(graph, elementClass) {
-  console.log('==TinkerGraphTraversal==');
   DefaultGraphTraversal.call(this, graph);
 
   this.getStrategies().register(TinkerGraphStrategy.instance());

@@ -14,8 +14,6 @@ TinkerGraphStepStrategy.instance = function() {
 };
 
 TinkerGraphStepStrategy.prototype.apply = function(traversal) {
-  console.log('==TinkerGraphStepStrategy.apply==');
-
   if (TraversalHelper.getStart(traversal) instanceof TinkerGraphStep) {
     var tinkerGraphStep = traversal.getSteps()[0];
     var currentStep = tinkerGraphStep.getNextStep();

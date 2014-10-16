@@ -63,11 +63,7 @@ TinkerElement.prototype.property = function(key) {
     list = this.graph.graphView.getProperty(this, key);
     return list.length === 0 ? Property.empty() : list[0];
   } else {
-    // console.log(this.properties.values().next().value);
-    // console.log(this.properties.size);
-    // console.log(this.properties.has(key));
     if (this.properties.has(key)) {
-      // console.log('=====');
       var property = this.properties.get(key)[0];
 
       return property;

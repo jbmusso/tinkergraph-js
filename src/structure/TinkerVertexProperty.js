@@ -18,7 +18,6 @@ function TinkerVertexProperty(vertex, key, value, propertyKeyValues) {
   ElementHelper.legalPropertyKeyValueArray(propertyKeyValues);
   ElementHelper.attachProperties(this, propertyKeyValues);
   //TODO: check if objectid is passed as first parameter
-  // console.log('..............');
 }
 
 inherits(TinkerVertexProperty, TinkerElement);

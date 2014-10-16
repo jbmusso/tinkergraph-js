@@ -33,7 +33,6 @@ _.extend(TinkerVertex.prototype, Vertex.prototype);
  */
 TinkerVertex.prototype.property = function(key, value, keyValues) {
   var list;
-  // console.log(!value && !keyValues);
   if (arguments.length === 1) { // todo: improve check?
     return this.getProperty(key);
   } else {
@@ -65,7 +64,6 @@ TinkerVertex.prototype.getProperty = function(key) { // JS specific method
 // JS specific
 TinkerVertex.prototype.getPropertyGraphMode = function(key) {
   if (this.properties.has(key)) {
-    // console.log(key);
     list = this.properties.get(key);
 
     if (list.length > 1) {
@@ -155,10 +153,7 @@ _.extend(TinkerVertex.Iterators.prototype, Vertex.Iterators.prototype, {
   // },
 
   vertices: function(direction, branchFactor, labels, element) {
-    console.log('==TinkerVertex.Iterators.vertices()==');
     var vertices = TinkerHelper.getVertices(element, direction, branchFactor, labels);
-
-    // console.log(vertices);
 
     return vertices;
   },

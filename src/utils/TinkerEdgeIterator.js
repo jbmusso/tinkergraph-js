@@ -7,8 +7,6 @@ function TinkerEdgeIterator(edges, branchFactor) {
 }
 
 TinkerEdgeIterator.prototype.next = function() {
-  console.log('==TinkerEdgeIterator.next()==');
-
   this.currentCount += 1;
 
   var nextEdge = this.edges.next(); // edges = MultiIterator
@@ -16,6 +14,7 @@ TinkerEdgeIterator.prototype.next = function() {
   var canContinue = this.currentCount < this.branchFactor && !nextEdge.done;
 
   if (canContinue) {
+    // yield edge
     return nextEdge;
   } else {
     return {
