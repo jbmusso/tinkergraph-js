@@ -48,8 +48,8 @@ TinkerGraph.prototype.v = function(id) {
 };
 
 TinkerGraph.prototype.addVertex = function(keyValues) {
-  ElementHelper.legalPropertyKeyValueArray(keyValues);
   keyValues = arguments.length === 1 ? keyValues : [].slice.call(arguments);
+  ElementHelper.legalPropertyKeyValueArray(keyValues);
 
   var idValue = ElementHelper.getIdValue(keyValues) || null;
   var label = ElementHelper.getLabelValue(keyValues) || Vertex.DEFAULT_LABEL;

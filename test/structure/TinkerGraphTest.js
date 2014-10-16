@@ -17,18 +17,39 @@ describe('Graph', function() {
       assert.equal(v.id, 0);
     });
 
-    it('should add a vertex with properties passed as multiple arguments', function() {
-      var v = g.addVertex('name', 'alice');
-      assert.equal(g.vertices.size, 1);
-      assert.equal(v.id, 0);
-      assert.equal(v.property('name').value, 'alice');
+    describe('method signatures', function() {
+      it('should add a vertex with key/value passed as multiple arguments', function() {
+        var v = g.addVertex('name', 'alice', 'foo', 'bar');
+        assert.equal(g.vertices.size, 1);
+        assert.equal(v.id, 0);
+        assert.equal(v.property('name').value, 'alice');
+        assert.equal(v.property('foo').value, 'bar');
+      });
+
+      it('should add a vertex with properties passed as a single object argument', function() {
+        var v = g.addVertex({ name: 'bob', baz: 'duh' });
+        assert.equal(g.vertices.size, 1);
+        assert.equal(v.id, 0);
+        assert.equal(v.property('name').value, 'bob');
+        assert.equal(v.property('baz').value, 'duh');
+      });
     });
 
-    it('should add a vertex with properties passed as a single object argument', function() {
-      var v = g.addVertex({ name: 'bob' });
-      assert.equal(g.vertices.size, 1);
-      assert.equal(v.id, 0);
-      assert.equal(v.property('name').value, 'bob');
+    describe('multiple vertices creation', function() {
+      it('should add many vertices to the graph', function() {
+        var v1 = g.addVertex({ name: 'bob' });
+        var v2 = g.addVertex({ name: 'alice' });
+
+        assert.equal(g.vertices.size, 2);
+      });
+
+      it('should increment vertices ids properly', function() {
+        var v1 = g.addVertex({ name: 'bob' });
+        var v2 = g.addVertex({ name: 'alice' });
+
+        assert.equal(v1.id, 0);
+        assert.equal(v2.id, 1);
+      });
     });
   });
 
@@ -40,15 +61,9 @@ describe('Graph', function() {
     it('should add an edge with no property', function() {
       var v1 = g.addVertex();
       var v2 = g.addVertex();
-
       var e = v1.addEdge('knows', v2);
 
-      assert.equal(v1.id, 0);
-      assert.equal(v2.id, 1);
-
-      assert.equal(g.vertices.size, 2);
       assert.equal(g.edges.size, 1);
-
       assert.equal(e.label, 'knows');
 
       assert.equal(v1.outEdges.size, 1);
@@ -63,15 +78,11 @@ describe('Graph', function() {
     it('should add an edge with properties', function() {
       var v1 = g.addVertex('name', 'bob');
       var v2 = g.addVertex({ name: 'alice' });
-
       var e = v1.addEdge('likes', v2, { since: 'now' });
 
       assert.equal(e.property('since').value, 'now');
 
-      // Elements should be added to the graph
-      assert.equal(g.vertices.size, 2);
       assert.equal(g.edges.size, 1);
-
       assert.equal(e.label, 'likes');
 
       assert.equal(v1.outEdges.size, 1);
@@ -81,7 +92,6 @@ describe('Graph', function() {
       assert.equal(v2.inEdges.size, 1);
       assert.equal(v2.inEdges.get('likes').size, 1);
       assert.equal(v2.inEdges.get('likes').values().next().value, e);
-
     });
   });
 

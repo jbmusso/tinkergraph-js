@@ -2,7 +2,6 @@
 var inherits = require('util').inherits;
 
 require('es6-shim');
-_ = require('lodash');
 
 var Element = require('gremlin-core-js/src/structure/Element');
 var Vertex = require('gremlin-core-js/src/structure/Vertex');
@@ -12,7 +11,6 @@ var TinkerHelper = require('./TinkerHelper');
 
 
 function TinkerElement(id, label, graph) {
-  Element.apply(this, arguments);
   this.graph = graph;
   this.id = id;
   this.label = label;

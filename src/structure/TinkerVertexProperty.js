@@ -11,7 +11,9 @@ var TinkerHelper = require('./TinkerHelper');
 
 
 function TinkerVertexProperty(vertex, key, value, propertyKeyValues) {
-  TinkerElement.call(this, TinkerHelper.getNextId(vertex.graph), key, vertex.graph); //bug: id incr. by 2 instead of 1 because of this (to fix in TinkerHelper.getNextId())
+  var id = null;
+  // var id = TinkerHelper.getNextId(vertex.graph);
+  TinkerElement.call(this, id, key, vertex.graph); //bug: id incr. by 2 instead of 1 because of this (to fix in TinkerHelper.getNextId())
   this.vertex = vertex;
   this.key = key;
   this.value = value;
