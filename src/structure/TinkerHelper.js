@@ -65,14 +65,6 @@ TinkerHelper.dropView = function(graph) {
   graph.graphView = null;
 };
 
-TinkerHelper.getVertices = function(graph) {
-  return graph.vertices.values();
-};
-
-TinkerHelper.getEdges = function(graph) {
-  return graph.edges.values();
-};
-
 TinkerHelper.queryVertexIndex = function(graph, key, value) {
   return graph.vertexIndex.get(key, value);
 };
@@ -117,10 +109,9 @@ TinkerHelper.getEdgesFromVertex = function(vertex, direction, branchFactor, labe
         edges.addIterator(vertex.inEdges.values());
       });
     } else {
-      //todo fix : add vertex.inEdges.forEach loop
-      for (labeledEdgeSet in vertex.inEdges) {
-        edges.addIterator(vertex.inEdges.get(labeledEdgeSet));
-      }
+      vertex.inEdges.forEach(function(labeledEdgeSet, edgeLabel) {
+        edges.addIterator(labeledEdgeSet.values());
+      });
     }
   }
 
@@ -155,9 +146,7 @@ TinkerHelper.getVerticesFromVertex = function(vertex, direction, branchFactor, l
   if (direction !== "both") {
     var edges = TinkerHelper.getEdges(vertex, direction, branchFactor, labels);
 
-
     var vertexIterator = new TinkerVertexIterator(edges, direction);
-
     return vertexIterator;
   } else {
     var vertices = new MultiIterator(branchFactor);

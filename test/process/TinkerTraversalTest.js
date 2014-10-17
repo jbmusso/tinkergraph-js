@@ -66,4 +66,48 @@ describe('Traversals', function() {
       assert.equal(count, 1);
     });
   });
+
+  describe('.V().in()', function() {
+    it('should retrieve ingoing adjacent vertices', function() {
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+
+      alice.addEdge('likes', bob);
+
+      var count = 0;
+
+      g.V().in().forEach(function(vertex) {
+        ++count;
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+        assert.equal(vertex.property('name').value, 'alice');
+      });
+
+      assert.equal(count, 1);
+    });
+  });
+
+  describe('.V().in().in()', function() {
+    it('should retrieve ingoing adjacent vertices', function() {
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+      var dude = g.addVertex('name', 'dude');
+
+      alice.addEdge('likes', bob);
+      bob.addEdge('likes', dude);
+
+      var count = 0;
+
+      g.V().in().in().forEach(function(vertex) {
+        ++count;
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+        assert.equal(vertex.property('name').value, 'alice');
+      });
+
+      assert.equal(count, 1);
+    });
+  });
 });
