@@ -87,7 +87,7 @@ TinkerHelper.getEdges = function(structure, direction, branchFactor, labels) {
 TinkerHelper.getEdgesFromVertex = function(vertex, direction, branchFactor, labels) { // JS specific method
   var edges = new MultiIterator();
   var outEdges;
-  var labeledEdgeSet;
+  var inEdges;
 
   if (direction === 'out' || direction === 'both') {
     if (labels.length > 0) {
@@ -143,18 +143,24 @@ TinkerHelper.getVertices = function(structure, direction, branchFactor, labels) 
 };
 
 TinkerHelper.getVerticesFromVertex = function(vertex, direction, branchFactor, labels) { // JS specific method
-  if (direction !== "both") {
-    var edges = TinkerHelper.getEdges(vertex, direction, branchFactor, labels);
+  var edges;
+  var vertexIterator;
+  var vertices;
+  var outVertexIterator;
+  var inVertexIterator;
 
-    var vertexIterator = new TinkerVertexIterator(edges, direction);
+  if (direction !== "both") {
+    edges = TinkerHelper.getEdges(vertex, direction, branchFactor, labels);
+
+    vertexIterator = new TinkerVertexIterator(edges, direction);
     return vertexIterator;
   } else {
-    var vertices = new MultiIterator(branchFactor);
-    var outIterator = new TinkerVertexIterator(TinkerHelper.getEdges(vertex, Direction.OUT, branchFactor, labels), 'out');
-    var inIterator = new TinkerVertexIterator(TinkerHelper.getEdges(vertex, Direction.OUT, branchFactor, labels), 'in');
+    vertices = new MultiIterator(branchFactor);
+    outVertexIterator = new TinkerVertexIterator(TinkerHelper.getEdges(vertex, 'out', branchFactor, labels), 'out');
+    inVertexIterator = new TinkerVertexIterator(TinkerHelper.getEdges(vertex, 'in', branchFactor, labels), 'in');
 
-    vertices.addIterator(outIterator);
-    vertices.addIterator(inIterator);
+    vertices.addIterator(outVertexIterator);
+    vertices.addIterator(inVertexIterator);
 
     return vertices;
   }

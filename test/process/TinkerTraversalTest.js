@@ -110,4 +110,25 @@ describe('Traversals', function() {
       assert.equal(count, 1);
     });
   });
+
+  describe('.V().both()', function() {
+    it('should retrieve adjacent vertices in both directions', function() {
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+
+      var count = 0;
+
+      alice.addEdge('spouseOf', bob);
+      // bob.addEdge('likes', dude);
+
+      g.V().both().forEach(function(vertex) {
+        ++count;
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+      });
+
+      assert.equal(count, 2);
+    });
+  });
 });
