@@ -21,114 +21,168 @@ describe('Traversals', function() {
     });
   });
 
-  describe('.V().out() #', function() {
-    it('should retrieve outgoing adjacent vertices', function() {
-      var g = TinkerGraph.open();
+  describe('.out()', function() {
+    describe('without label', function() {
+      it('should retrieve outgoing adjacent vertices', function() {
+        var g = TinkerGraph.open();
 
-      var alice = g.addVertex('name', 'alice');
-      var bob = g.addVertex('name', 'bob');
-      var dude = g.addVertex('name', 'dude');
-      var foo = g.addVertex('name', 'foo');
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
+        var foo = g.addVertex('name', 'foo');
 
-      alice.addEdge('likes', dude);
-      bob.addEdge('likes', foo);
+        alice.addEdge('likes', dude);
+        bob.addEdge('knows', foo);
 
-      var count = 0;
+        var count = 0;
 
-      g.V().out().forEach(function(vertex) {
-        ++count;
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
+        g.V().out().forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+        });
+
+        assert.equal(count, 2);
       });
+    });
 
-      assert.equal(count, 2);
+    describe('with a label', function() {
+      it('should retrieve outgoing adjacent vertices', function() {
+        var g = TinkerGraph.open();
+
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
+        var foo = g.addVertex('name', 'foo');
+
+        alice.addEdge('likes', dude);
+        bob.addEdge('knows', foo);
+
+        var count = 0;
+
+        g.V().out('likes').forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+          assert.equal(vertex.property('name').value, 'dude');
+        });
+
+        assert.equal(count, 1);
+      });
+    });
+
+    describe('when chained', function() {
+      it('should retrieve outgoing adjacent vertices 2 levels away', function() {
+        var g = TinkerGraph.open();
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
+
+        alice.addEdge('likes', bob);
+        bob.addEdge('likes', dude);
+
+        var count = 0;
+
+        g.V().out().out().forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+        });
+
+        assert.equal(count, 1);
+      });
     });
   });
 
-  describe('.V().out().out() #', function() {
-    it('should retrieve outgoing adjacent vertices', function() {
-      var g = TinkerGraph.open();
-      var alice = g.addVertex('name', 'alice');
-      var bob = g.addVertex('name', 'bob');
-      var dude = g.addVertex('name', 'dude');
+  describe('.in()', function() {
+    describe('without label', function() {
+      it('should retrieve ingoing adjacent vertices', function() {
+        var g = TinkerGraph.open();
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
 
-      alice.addEdge('likes', bob);
-      bob.addEdge('likes', dude);
+        alice.addEdge('likes', bob);
 
-      var count = 0;
+        var count = 0;
 
-      g.V().out().out().forEach(function(vertex) {
-        ++count;
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
+        g.V().in().forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+          assert.equal(vertex.property('name').value, 'alice');
+        });
+
+        assert.equal(count, 1);
       });
+    });
 
-      assert.equal(count, 1);
+    describe('when chained', function() {
+      it('should retrieve ingoing adjacent vertices 2 levels away', function() {
+        var g = TinkerGraph.open();
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
+
+        alice.addEdge('likes', bob);
+        bob.addEdge('likes', dude);
+
+        var count = 0;
+
+        g.V().in().in().forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+          assert.equal(vertex.property('name').value, 'alice');
+        });
+
+        assert.equal(count, 1);
+      });
     });
   });
 
-  describe('.V().in()', function() {
-    it('should retrieve ingoing adjacent vertices', function() {
-      var g = TinkerGraph.open();
-      var alice = g.addVertex('name', 'alice');
-      var bob = g.addVertex('name', 'bob');
+  describe('.both()', function() {
+    describe('without label', function() {
+      it('should retrieve adjacent vertices in both directions', function() {
+        var g = TinkerGraph.open();
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
 
-      alice.addEdge('likes', bob);
+        var count = 0;
 
-      var count = 0;
+        alice.addEdge('spouseOf', bob);
+        bob.addEdge('likes', dude);
 
-      g.V().in().forEach(function(vertex) {
-        ++count;
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
-        assert.equal(vertex.property('name').value, 'alice');
+        g.V().both().forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+        });
+
+        assert.equal(count, 4);
       });
-
-      assert.equal(count, 1);
     });
-  });
 
-  describe('.V().in().in()', function() {
-    it('should retrieve ingoing adjacent vertices', function() {
-      var g = TinkerGraph.open();
-      var alice = g.addVertex('name', 'alice');
-      var bob = g.addVertex('name', 'bob');
-      var dude = g.addVertex('name', 'dude');
+    describe('with a label', function() {
+      it('should retrieve adjacent vertices in both directions', function() {
+        var g = TinkerGraph.open();
+        var alice = g.addVertex('name', 'alice');
+        var bob = g.addVertex('name', 'bob');
+        var dude = g.addVertex('name', 'dude');
 
-      alice.addEdge('likes', bob);
-      bob.addEdge('likes', dude);
+        var count = 0;
 
-      var count = 0;
+        alice.addEdge('spouseOf', bob);
+        bob.addEdge('likes', dude);
 
-      g.V().in().in().forEach(function(vertex) {
-        ++count;
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
-        assert.equal(vertex.property('name').value, 'alice');
+        g.V().both('spouseOf').forEach(function(vertex) {
+          ++count;
+          assert.isDefined(vertex);
+          assert.equal(vertex.constructor.name, 'TinkerVertex');
+        });
+
+        assert.equal(count, 2);
       });
-
-      assert.equal(count, 1);
-    });
-  });
-
-  describe('.V().both()', function() {
-    it('should retrieve adjacent vertices in both directions', function() {
-      var g = TinkerGraph.open();
-      var alice = g.addVertex('name', 'alice');
-      var bob = g.addVertex('name', 'bob');
-
-      var count = 0;
-
-      alice.addEdge('spouseOf', bob);
-      // bob.addEdge('likes', dude);
-
-      g.V().both().forEach(function(vertex) {
-        ++count;
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
-      });
-
-      assert.equal(count, 2);
     });
   });
 });

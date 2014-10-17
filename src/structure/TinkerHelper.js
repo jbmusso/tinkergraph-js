@@ -92,8 +92,8 @@ TinkerHelper.getEdgesFromVertex = function(vertex, direction, branchFactor, labe
   if (direction === 'out' || direction === 'both') {
     if (labels.length > 0) {
       labels.forEach(function(label) {
-        outEdges = vertex.outEdges.get(label) || [];
-        edges.addIterator(vertex.outEdges.values());
+        outEdges = vertex.outEdges.get(label) || new Set();
+        edges.addIterator(outEdges.values());
       });
     } else {
       vertex.outEdges.forEach(function(labeledEdgeSet, edgeLabel) {
@@ -105,8 +105,8 @@ TinkerHelper.getEdgesFromVertex = function(vertex, direction, branchFactor, labe
   if (direction === 'in' || direction === 'both') {
     if (labels.length > 0) {
       labels.forEach(function(label) {
-        inEdges = vertex.inEdges.get(label) || [];
-        edges.addIterator(vertex.inEdges.values());
+        inEdges = vertex.inEdges.get(label) || new Set();
+        edges.addIterator(inEdges.values());
       });
     } else {
       vertex.inEdges.forEach(function(labeledEdgeSet, edgeLabel) {
