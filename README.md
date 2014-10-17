@@ -1,30 +1,65 @@
 tinkergraph-js
 ==============
 
-A pure JavaScript implementation of TinkerPop's TinkerGraph in-memory graph database
+A pure JavaScript implementation of TinkerGraph in-memory graph database from [TinkerPop3 framework](https://github.com/tinkerpop3) that works in Node.js and in the browser (soon).
 
-This library is a work in progress. It requires an external dependency (gulthor/gremlin-core-js) which is not yet published to npm.
+This library is a work in progress and is not yet published on npm. It requires an external dependency (https://github.com/gulthor/gremlin-core-js) listed in the `package.json` file.
 
+Both libraries will be published as v3.0.0 on npm once TinkerPop3 final version is released and all features are ported. They'll then track all subsequent releases.
+
+## Install
+
+```
+$ npm install gulthor/tinkergraph-js -S
+```
+
+Run tests with:
+
+```
+$ gulp test
+```
+
+## Usage
+
+The library is a 1:1 port of TinkerGraph. Please refer to [Gremlin docs](http://gremlindocs.com/) for a complete guide on using steps.
 
 ## Features
 
-Most TinkerGraph features should be working:
-* `g.addVertex('key1', 'value1', 'key2', 'value2');` or `g.addVertex({ key: 'value' })`
-* vertex.addEdge('label', vertex, { key: 'value' });
+TinkerGraph structure features are tested and working. Features related to setting ids on creation are still work in progress.
 
-## Integration with Gremlin
+### Graph structure
 
-### Steps
+#### Adding a vertex
+* `g.addVertex('key1', 'value1', 'key2', 'value2');`
+* `g.addVertex({ key: 'value', key2: 'value2' });` (alternatively, JS only)
 
-#### Working steps:
-* g.V() - does not accept filters yet
+#### Adding an edge
+* `vertex.addEdge('label', vertex, { key: 'value' });`
 
-#### Actively developed
-* g.V().out()
-* g.V().in()
-* g.V().both()
+### Gremlin steps
+
+#### Working steps
+* V - does not accept filters yet
+
+Vertex steps (accept 0, 1 or n String label paremeters):
+* out / outE
+* in / inE
+* both / bothE
+
+#### Being developed
+* outV
+* inV
+* bothV
+* E
+* path
+* map
+* groupBy
+* groupCount
+* sideEffect
 * ...
 
-### Traversal
+### Traversal methods
 
-* traversal.forEach()
+* `traversal.forEach(callback)` (working)
+* `traversal.next()`
+* ...
