@@ -148,9 +148,10 @@ _.extend(TinkerVertex.Iterators.prototype, Vertex.Iterators.prototype, {
 
   // },
 
-  // edges: function() {
-
-  // },
+  edges: function(direction, branchFactor, labels, element) {
+    var edges = TinkerHelper.getEdges(element, direction, branchFactor, labels);
+    return edges;
+  },
 
   vertices: function(direction, branchFactor, labels, element) {
     var vertices = TinkerHelper.getVertices(element, direction, branchFactor, labels);
