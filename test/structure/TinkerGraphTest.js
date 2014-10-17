@@ -107,4 +107,24 @@ describe('Graph', function() {
       assert.equal(fetchedVertex, createdVertex);
     });
   });
+
+  describe('.V()', function() {
+    it('should retrieve all vertices from the graph', function() {
+      var g = TinkerGraph.open();
+      // Add dummy vertices
+      g.addVertex('name', 'alice');
+      g.addVertex('name', 'bob');
+      g.addVertex('name', 'man');
+
+      var count = 0;
+
+      g.V().forEach(function(vertex) {
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+        count++;
+      });
+
+      assert.equal(count, 3);
+    });
+  });
 });

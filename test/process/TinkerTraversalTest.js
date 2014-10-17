@@ -1,26 +1,6 @@
 var TinkerGraph = require('../../src/structure/tinkergraph');
 
-describe('Traversals', function() {
-  describe('.V() #', function() {
-    it('should retrieve all vertices from the graph', function() {
-      var g = TinkerGraph.open();
-      // Add dummy vertices
-      g.addVertex('name', 'alice');
-      g.addVertex('name', 'bob');
-      g.addVertex('name', 'man');
-
-      var count = 0;
-
-      g.V().forEach(function(vertex) {
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
-        count++;
-      });
-
-      assert.equal(count, 3);
-    });
-  });
-
+describe('Traversal steps', function() {
   describe('.out()', function() {
     describe('without label', function() {
       it('should retrieve outgoing adjacent vertices', function() {
