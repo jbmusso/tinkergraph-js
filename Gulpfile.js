@@ -16,7 +16,7 @@ function printEvent(event) {
 gulp.task('test', function() {
   assert = chai.assert;
 
-  gulp.src(['test/structure/**/*'])
+  gulp.src(['test/structure/**/*', 'test/process/**/*'])
       .pipe(mocha({
         reporter: 'spec',
         bail: !!args.bail,
