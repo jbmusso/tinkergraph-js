@@ -317,4 +317,24 @@ describe('Traversal steps', function() {
       });
     });
   });
+
+  describe('.path()', function() {
+    it.skip('should retrieve all paths', function() {
+
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+
+      alice.addEdge('likes', bob);
+      bob.addEdge('knows', alice);
+
+      var count = 0;
+
+      var paths = g.V().path();
+      paths.forEach(function(path) {
+        ++count;
+        console.log(path);
+      });
+    });
+  });
 });
