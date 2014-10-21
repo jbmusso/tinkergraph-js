@@ -1,4 +1,5 @@
 var _ = require('lazy.js');
+require('es6-shim');
 
 var MultiIterator = require('gremlin-core-js/src/process/util/multiiterator');
 var ElementHelper = require('gremlin-core-js/src/structure/util/elementhelper');
@@ -177,7 +178,7 @@ TinkerHelper.getVerticesFromEdge = function(edge, direction) { // JS specific me
     vertices.push(edge.inVertex);
   }
 
-  return new Iterator(vertices);
+  return vertices.values(); // iterator
 };
 
 TinkerHelper.inComputerMode = function(graph) {

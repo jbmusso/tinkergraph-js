@@ -41,15 +41,12 @@ TinkerGraph structure features are tested and working. Features related to setti
 #### Working steps
 * V - does not accept filters yet
 
-Vertex steps (accept 0, 1 or n String label paremeters):
-* out / outE
-* in / inE
-* both / bothE
+Vertex and edge steps
+* out / outE / outV
+* in / inE / inV
+* both / bothE / bothV
 
 #### Being developed
-* outV
-* inV
-* bothV
 * E
 * path
 * map

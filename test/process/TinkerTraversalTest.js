@@ -290,9 +290,70 @@ describe('Traversal steps', function() {
     });
   });
 
+  describe('.inV()', function() {
+    it('should retrieve incoming vertices from an edge', function() {
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+
+      alice.addEdge('likes', bob);
+      bob.addEdge('knows', alice);
+
+      var count = 0;
+
+      g.V().outE().inV().forEach(function(vertex) {
+        ++count;
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+      });
+
+      assert.equal(count, 2);
+    });
+  });
+
+  describe('.outV()', function() {
+    it('should retrieve outcoming vertices from an edge', function() {
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+
+      alice.addEdge('likes', bob);
+      bob.addEdge('knows', alice);
+
+      var count = 0;
+
+      g.V().inE().outV().forEach(function(vertex) {
+        ++count;
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+      });
+
+      assert.equal(count, 2);
+    });
+  });
+
+  describe('.bothV()', function() {
+    it('should retrieve incoming and outgoing vertices from an edge', function() {
+      var g = TinkerGraph.open();
+      var alice = g.addVertex('name', 'alice');
+      var bob = g.addVertex('name', 'bob');
+
+      alice.addEdge('likes', bob);
+
+      var count = 0;
+
+      g.V().inE().bothV().forEach(function(vertex) {
+        ++count;
+        assert.isDefined(vertex);
+        assert.equal(vertex.constructor.name, 'TinkerVertex');
+      });
+
+      assert.equal(count, 2);
+    });
+  });
+
   describe.skip('.path()', function() {
     it('should retrieve all paths', function() {
-
       var g = TinkerGraph.open();
       var alice = g.addVertex('name', 'alice');
       var bob = g.addVertex('name', 'bob');

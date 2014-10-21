@@ -135,7 +135,7 @@ TinkerVertex.prototype.getIterators = function() {
   return this.iterators;
 };
 
-TinkerVertex.Iterators = function() {
+TinkerVertex.Iterators = function TinkerVertexIterators() {
 };
 
 inherits(TinkerVertex.Iterators, TinkerElement.Iterators); // extends

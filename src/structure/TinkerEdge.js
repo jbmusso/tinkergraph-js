@@ -16,6 +16,7 @@ function TinkerEdge(id, outVertex, label, inVertex, graph) {
   this.outVertex = outVertex;
   this.inVertex = inVertex;
   this.graph.edgeIndex.autoUpdate(T.label.getAccessor(), this.label, null, this);
+  this.iterators = new TinkerEdge.Iterators(this);
 }
 
 inherits(TinkerEdge, TinkerElement); // extends
@@ -51,15 +52,16 @@ TinkerEdge.prototype.getIterators = function() {
   return this.iterators;
 };
 
-TinkerEdge.Iterators = function() {
+TinkerEdge.Iterators = function TinkerEdgeIterators(edge) {
+  this.edge = edge;
 };
 
 inherits(TinkerEdge.Iterators, TinkerElement.Iterators);
 _.extend(TinkerEdge.Iterators.prototype, Edge.Iterators.prototype);
 
 TinkerEdge.Iterators.prototype = {
-  vertices: function(direction) {
-    return TinkerHelper.getVertices(TinkerEdge.this, direction); // TODO: most likely bugged, tweak TinkerEdge.this to reference to current edge
+  vertexIterator: function(direction) { // element as last parameter diverge from Java codebase
+    return TinkerHelper.getVertices(this.edge, direction);
   },
 
   properties: function(propertyKeys) { //...propertyKeys
