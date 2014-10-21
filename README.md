@@ -60,3 +60,10 @@ Vertex and edge steps
 * `traversal.forEach(callback)` (working)
 * `traversal.next()`
 * ...
+
+## Performance
+
+TinkerGraph-js and gremlin-core-js internally uses iterators, ES6 Map and Set classes. All traversals are executed lazily.
+
+On my laptop (2.3 Ghz i7 cpu, 16 Gb ram), TinkerGraph-js adds approximately 20000 vertices per second to the graph.
+
