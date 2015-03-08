@@ -3,14 +3,14 @@ tinkergraph-js
 
 A pure JavaScript implementation of TinkerGraph in-memory graph database from [TinkerPop3 framework](https://github.com/tinkerpop3) that works in Node.js and in the browser (soon).
 
-This library is a work in progress and is not yet published on npm. It requires an external dependency (https://github.com/gulthor/gremlin-core-js) listed in the `package.json` file.
+This library is a work in progress and is not yet published on npm. It requires an external dependency (https://github.com/jbmusso/gremlin-core-js) listed in the `package.json` file.
 
 Both libraries will be published as v3.0.0 on npm once TinkerPop3 final version is released and all features are ported. They'll then track all subsequent releases.
 
 ## Install
 
 ```
-$ npm install gulthor/tinkergraph-js -S
+$ npm install jbmusso/tinkergraph-js -S
 ```
 
 Run tests with:
