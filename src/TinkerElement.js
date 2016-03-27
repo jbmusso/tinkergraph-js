@@ -1,11 +1,6 @@
-/*jshint -W079 */
-var inherits = require('util').inherits;
+import { inherits } from 'util';
 
-// var Element = require('gremlin-core/src/structure/Element');
-// var Vertex = require('gremlin-core/src/structure/Vertex');
-// var Property = require('gremlin-core/src/structure/Property');
-
-var TinkerHelper = require('./TinkerHelper');
+import TinkerHelper from './TinkerHelper';
 
 
 class TinkerElement {
@@ -15,9 +10,6 @@ class TinkerElement {
     this.label = label;
     this.properties = new Map();
   }
-
-
-// inherits(TinkerElement, Element);
 
   hashCode() {
     return this.id.hashCode(); //todo: native Java, must override

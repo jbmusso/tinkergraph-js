@@ -1,13 +1,10 @@
-var inherits = require('util').inherits;
+import { inherits } from 'util';
 
-var _ = require('lodash');
-
-// var Vertex = require('gremlin-core/src/structure/vertex');
-// var VertexProperty = require('gremlin-core/src/structure/vertexproperty');
+import _ from 'lodash';
 
 import * as ElementHelper from './ElementHelper';
-var TinkerHelper = require('./TinkerHelper');
-var TinkerElement = require('./TinkerElement');
+import TinkerHelper from './TinkerHelper';
+import TinkerElement from './TinkerElement';
 import TinkerVertexProperty from './TinkerVertexProperty';
 
 // var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
@@ -24,10 +21,6 @@ class TinkerVertex extends TinkerElement {
     this.inEdges = new Map(); // <Label, Array<Edge>>
     this.iterators = new TinkerVertex.Iterators();
   }
-
-
-  // inherits(TinkerVertex, TinkerElement);
-  // _.extend(TinkerVertex.prototype, Vertex.prototype);
 
   /**
    * This method is overloaded in Java and handles both set/get operations.

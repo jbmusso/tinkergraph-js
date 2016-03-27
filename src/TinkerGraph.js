@@ -1,18 +1,11 @@
-var inherits = require('util').inherits;
+import _ from 'lodash';
 
-var _ = require('lodash');
-
-// var Graph = require('gremlin-core/src/structure/graph');
-// var Vertex = require('gremlin-core/src/structure/vertex');
-
-
-// var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
 import * as ElementHelper from './ElementHelper';
-import TinkerIndex from './tinkerindex';
 
-var TinkerHelper = require('./tinkerhelper');
-var TinkerVertex = require('./tinkervertex');
-var TinkerEdge = require('./tinkeredge');
+import TinkerIndex from './TinkerIndex';
+import TinkerHelper from './TinkerHelper';
+import TinkerVertex from './TinkerVertex';
+import TinkerEdge from './TinkerEdge';
 
 
 class TinkerGraph {

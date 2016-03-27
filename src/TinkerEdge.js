@@ -1,14 +1,10 @@
-var inherits = require('util').inherits;
+import { inherits } from 'util';
 
-var _ = require('lodash');
+import _ from 'lodash';
 
-// var Edge = require('gremlin-core/src/structure/Edge');
-// var T = require('gremlin-core/src/process/T');
-// var ElementHelper = require('gremlin-core/src/structure/util/ElementHelper');
-
-var TinkerElement = require('./TinkerElement');
-var TinkerHelper = require('./TinkerHelper');
-var TinkerProperty = require('./TinkerProperty');
+import TinkerElement from './TinkerElement';
+import TinkerHelper from './TinkerHelper';
+import TinkerProperty from './TinkerProperty';
 
 
 class TinkerEdge extends TinkerElement {

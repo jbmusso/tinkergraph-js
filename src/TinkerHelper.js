@@ -1,11 +1,8 @@
 import _ from 'lodash';
+
+import TinkerVertexIterator from './utils/TinkerVertexIterator';
+import TinkerEdgeIterator from './utils/TinkerEdgeIterator';
 import * as ElementHelper from './ElementHelper';
-
-// var MultiIterator = require('gremlin-core/src/process/util/multiiterator');
-// var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
-
-var TinkerVertexIterator = require('./utils/TinkerVertexIterator');
-var TinkerEdgeIterator = require('./utils/TinkerEdgeIterator');
 
 // -------------------------
 // TinkerHelper
