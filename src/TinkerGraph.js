@@ -8,7 +8,8 @@ var _ = require('lodash');
 
 // var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
 import * as ElementHelper from './ElementHelper';
-var TinkerIndex = require('./tinkerindex');
+import TinkerIndex from './tinkerindex';
+
 var TinkerHelper = require('./tinkerhelper');
 var TinkerVertex = require('./tinkervertex');
 var TinkerEdge = require('./tinkeredge');
