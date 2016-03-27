@@ -1,37 +1,30 @@
-var inherits = require('util').inherits;
+class TinkerProperty {
+  constructor(element, key, value) {
+    this.element = element;
+    this.key = key;
+    this.value = value;
+    this.graph = this.element.graph;
+  }
 
-// var Property = require('gremlin-core/src/structure/Property');
-// var GraphKey = require('gremlin-core/src/structure/Graph.Key');
+  getElement() {
+    return this.element;
+  };
 
-function TinkerProperty(element, key, value) {
-  this.element = element;
-  this.key = key;
-  this.value = value;
-  this.graph = this.element.graph;
+  getKey() {
+    // return GraphKey.unHide(this.key);
+  };
+
+  getValue() {
+    return this.value;
+  };
+
+  isPresent() {
+    return !!this.value;
+  };
+
+  isHidden() {
+    // return GraphKey.isHidden(this.key);
+  };
 }
 
-// inherits(TinkerProperty, Property);
-
-TinkerProperty.prototype.getElement = function() {
-  return this.element;
-};
-
-TinkerProperty.prototype.getKey = function() {
-  // return GraphKey.unHide(this.key);
-};
-
-TinkerProperty.prototype.getValue = function() {
-  return this.value;
-};
-
-TinkerProperty.prototype.isPresent = function() {
-  return !!this.value;
-};
-
-TinkerProperty.prototype.isHidden = function() {
-  // return GraphKey.isHidden(this.key);
-};
-
-
-
-module.exports = TinkerProperty;
+export default TinkerProperty;
