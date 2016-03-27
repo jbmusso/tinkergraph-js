@@ -180,10 +180,6 @@ TinkerHelper.getVerticesFromEdge = function(edge, direction) { // JS specific me
   return vertices.values(); // iterator
 };
 
-TinkerHelper.inComputerMode = function(graph) {
-  return !!graph.graphView; //TODO: implement proper method
-};
-
 TinkerHelper.createGraphView = function(graph, isolation, computeKeys) {
   var graphView = new TinkerGraphView(isolation, computeKeys);
   graph.graphView = graphView;

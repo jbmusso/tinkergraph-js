@@ -38,28 +38,6 @@ class TinkerVertex extends TinkerElement {
 
   // JS specific method for getting a property (see property method above)
   getProperty(key) { // JS specific method
-    var list;
-
-    if (TinkerHelper.inComputerMode(this.graph)) {
-      list = this.graph.graphView.getProperty(this, key);
-
-      if (list.length === 0) {
-        // return VertexProperty.empty();
-        return {}; // temp fix
-      }
-      else if (list.length == 1) {
-        return list[0];
-      }
-      else {
-        new Error('Vertex.Exceptions.multiplePropertiesExistForProvidedKey(key)');
-      }
-    } else {
-      return this.getPropertyGraphMode(key);
-    }
-  };
-
-  // JS specific
-  getPropertyGraphMode(key) {
     if (this.properties.has(key)) {
       const list = this.properties.get(key);
 
@@ -82,19 +60,7 @@ class TinkerVertex extends TinkerElement {
     keyValues = keyValues || [];
     // ElementHelper.legalPropertyKeyValueArray(keyValues);
 
-    // if (TinkerHelper.inComputerMode(this.graph)) {
-    var inComputerMode = false;
-    if (inComputerMode) {
-      vertexProperty = this.graph.graphView.setProperty(this, key, value);
-      ElementHelper.attachProperties(vertexProperty, keyValues);
-      return vertexProperty;
-    } else {
-      return this.setPropertyGraphMode(key, value, keyValues);
-    }
-  };
-
-  setPropertyGraphMode(key, value, keyValues) {
-    let vertexProperty;
+    // let vertexProperty;
     // var optionalId = ElementHelper.getIdValue(keyValues);
     let optionalId; // temp
     // ElementHelper.validateProperty(key, value);

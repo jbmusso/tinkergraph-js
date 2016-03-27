@@ -26,20 +26,16 @@ class TinkerEdge extends TinkerElement {
   }
 
   setProperty(key, value) {
-    if (TinkerHelper.inComputerMode(this.graph)) {
-      return this.graph.graphView.setProperty(this, key, value);
-    } else {
-      // ElementHelper.validateProperty(key, value);
+    // ElementHelper.validateProperty(key, value);
 
-      var oldProperty = TinkerElement.prototype.property.call(this, key);
-      var newProperty = new TinkerProperty(this, key, value);
+    var oldProperty = TinkerElement.prototype.property.call(this, key);
+    var newProperty = new TinkerProperty(this, key, value);
 
-      // this.properties.put(key, Arrays.asList(newProperty));
-      this.properties.set(key, [newProperty]);
-      // this.graph.edgeIndex.autoUpdate(key, value, oldProperty.isPresent() ? oldProperty.value() : null, this); // todo: reenable index
+    // this.properties.put(key, Arrays.asList(newProperty));
+    this.properties.set(key, [newProperty]);
+    // this.graph.edgeIndex.autoUpdate(key, value, oldProperty.isPresent() ? oldProperty.value() : null, this); // todo: reenable index
 
-      return newProperty;
-    }
+    return newProperty;
   }
 
   getIterators() {
