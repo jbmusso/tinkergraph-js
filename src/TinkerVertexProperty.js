@@ -1,9 +1,10 @@
 var inherits = require('util').inherits;
+import * as ElementHelper from './ElementHelper';
 
 var _ = require('lodash');
 
-var ElementHelper = require('gremlin-core-js/src/structure/util/ElementHelper');
-var GraphKey = require('gremlin-core-js/src/structure/Graph.Key');
+// var ElementHelper = require('gremlin-core/src/structure/util/ElementHelper');
+// var GraphKey = require('gremlin-core/src/structure/Graph.Key');
 
 var TinkerElement = require('./TinkerElement');
 var TinkerHelper = require('./TinkerHelper');
@@ -17,7 +18,7 @@ function TinkerVertexProperty(vertex, key, value, propertyKeyValues) {
   this.vertex = vertex;
   this.key = key;
   this.value = value;
-  ElementHelper.legalPropertyKeyValueArray(propertyKeyValues);
+  // ElementHelper.legalPropertyKeyValueArray(propertyKeyValues);
   ElementHelper.attachProperties(this, propertyKeyValues);
   //TODO: check if objectid is passed as first parameter
 }

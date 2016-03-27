@@ -1,11 +1,9 @@
 /*jshint -W079 */
 var inherits = require('util').inherits;
 
-require('es6-shim');
-
-var Element = require('gremlin-core-js/src/structure/Element');
-var Vertex = require('gremlin-core-js/src/structure/Vertex');
-var Property = require('gremlin-core-js/src/structure/Property');
+// var Element = require('gremlin-core/src/structure/Element');
+// var Vertex = require('gremlin-core/src/structure/Vertex');
+// var Property = require('gremlin-core/src/structure/Property');
 
 var TinkerHelper = require('./TinkerHelper');
 
@@ -17,7 +15,7 @@ function TinkerElement(id, label, graph) {
   this.properties = new Map();
 }
 
-inherits(TinkerElement, Element);
+// inherits(TinkerElement, Element);
 
 TinkerElement.prototype.hashCode = function() {
   return this.id.hashCode(); //todo: native Java, must override
@@ -66,7 +64,8 @@ TinkerElement.prototype.property = function(key) {
 
       return property;
     } else {
-      return Property.empty();
+      // return Property.empty();
+      return {} // temp fix;
     }
   }
 };
@@ -74,7 +73,7 @@ TinkerElement.prototype.property = function(key) {
 TinkerElement.Iterators = function() {
 };
 
-inherits(TinkerElement.Iterators, Element.Iterators);
+// inherits(TinkerElement.Iterators, Element.Iterators);
 
 TinkerElement.Iterators.prototype = {
   hiddens: function(propertyKeys) {

@@ -26,3 +26,4 @@ TinkerEdgeIterator.prototype.next = function() {
 
 
 module.exports = TinkerEdgeIterator;
+// export default TinkerEdgeIterator;

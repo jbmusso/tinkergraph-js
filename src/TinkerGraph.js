@@ -1,19 +1,19 @@
 var inherits = require('util').inherits;
 
 var _ = require('lodash');
-require('es6-shim');
 
-var Graph = require('gremlin-core-js/src/structure/graph');
-var Vertex = require('gremlin-core-js/src/structure/vertex');
+// var Graph = require('gremlin-core/src/structure/graph');
+// var Vertex = require('gremlin-core/src/structure/vertex');
 
 
-var ElementHelper = require('gremlin-core-js/src/structure/util/elementhelper');
+// var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
+import * as ElementHelper from './ElementHelper';
 var TinkerIndex = require('./tinkerindex');
 var TinkerHelper = require('./tinkerhelper');
 var TinkerVertex = require('./tinkervertex');
 var TinkerEdge = require('./tinkeredge');
 
-var TinkerGraphTraversal = require('../process/graph/tinkergraphtraversal');
+// var TinkerGraphTraversal = require('../process/graph/tinkergraphtraversal');
 
 
 function TinkerGraph () {
@@ -27,7 +27,7 @@ function TinkerGraph () {
   this.edgeIndex = new TinkerIndex(this, TinkerEdge);
 }
 
-inherits(TinkerGraph, Graph);
+// inherits(TinkerGraph, Graph);
 
 TinkerGraph.open = function() {
   return new TinkerGraph();
@@ -47,12 +47,15 @@ TinkerGraph.prototype.v = function(id) {
   }
 };
 
-TinkerGraph.prototype.addVertex = function(keyValues) {
-  keyValues = arguments.length === 1 ? keyValues : [].slice.call(arguments);
-  ElementHelper.legalPropertyKeyValueArray(keyValues);
+TinkerGraph.prototype.addVertex = function(object = [], ...args) {
+  const keyValues = args.length ? _.chunk([object, ...args], 2): _.toPairs(object);
 
-  var idValue = ElementHelper.getIdValue(keyValues) || null;
-  var label = ElementHelper.getLabelValue(keyValues) || Vertex.DEFAULT_LABEL;
+  // ElementHelper.legalPropertyKeyValueArray(keyValues);
+
+  // var idValue = ElementHelper.getIdValue(keyValues) || null;
+  // var label = ElementHelper.getLabelValue(keyValues) || Vertex.DEFAULT_LABEL;
+  let idValue = null;
+  const label = 'vertex';
 
   if (idValue) {
     if (this.vertices.get(idValue)) {
@@ -64,6 +67,7 @@ TinkerGraph.prototype.addVertex = function(keyValues) {
 
   var vertex = new TinkerVertex(idValue, label, this);
   this.vertices.set(vertex.id, vertex);
+
 
   ElementHelper.attachProperties(vertex, keyValues);
 
@@ -77,7 +81,7 @@ TinkerGraph.prototype.V = function() {
 };
 
 TinkerGraph.prototype.E = function() {
-  throw new Error('Must be implemented in TinkerGraph class');
+  throw new Error('Not yet implemented');
 };
 
 TinkerGraph.prototype.of = function() {

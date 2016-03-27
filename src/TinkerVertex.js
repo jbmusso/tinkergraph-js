@@ -1,16 +1,16 @@
 var inherits = require('util').inherits;
 
 var _ = require('lodash');
-require('es6-shim');
 
-var Vertex = require('gremlin-core-js/src/structure/vertex');
-var VertexProperty = require('gremlin-core-js/src/structure/vertexproperty');
+// var Vertex = require('gremlin-core/src/structure/vertex');
+// var VertexProperty = require('gremlin-core/src/structure/vertexproperty');
 
-var TinkerHelper = require('./tinkerhelper');
-var TinkerElement = require('./tinkerelement');
-var TinkerVertexProperty = require('./tinkervertexproperty');
+import * as ElementHelper from './ElementHelper';
+var TinkerHelper = require('./TinkerHelper');
+var TinkerElement = require('./TinkerElement');
+var TinkerVertexProperty = require('./TinkerVertexProperty');
 
-var ElementHelper = require('gremlin-core-js/src/structure/util/elementhelper');
+// var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
 
 function TinkerVertex(id, label, graph) {
   TinkerElement.apply(this, arguments);
@@ -24,7 +24,7 @@ function TinkerVertex(id, label, graph) {
 }
 
 inherits(TinkerVertex, TinkerElement);
-_.extend(TinkerVertex.prototype, Vertex.prototype);
+// _.extend(TinkerVertex.prototype, Vertex.prototype);
 
 /**
  * This method is overloaded in Java and handles both set/get operations.
@@ -48,7 +48,8 @@ TinkerVertex.prototype.getProperty = function(key) { // JS specific method
     list = this.graph.graphView.getProperty(this, key);
 
     if (list.length === 0) {
-      return VertexProperty.empty();
+      // return VertexProperty.empty();
+      return {}; // temp fix
     }
     else if (list.length == 1) {
       return list[0];
@@ -64,7 +65,7 @@ TinkerVertex.prototype.getProperty = function(key) { // JS specific method
 // JS specific
 TinkerVertex.prototype.getPropertyGraphMode = function(key) {
   if (this.properties.has(key)) {
-    list = this.properties.get(key);
+    const list = this.properties.get(key);
 
     if (list.length > 1) {
       new Error('Vertex.Exceptions.multiplePropertiesExistForProvidedKey(key)');
@@ -73,7 +74,8 @@ TinkerVertex.prototype.getPropertyGraphMode = function(key) {
       return list[0];
     }
   } else {
-    return VertexProperty.empty();
+    // return VertexProperty.empty();
+    return {}; // temp fix
   }
 };
 
@@ -82,7 +84,7 @@ TinkerVertex.prototype.setProperty = function(key, value, keyValues) {
   var vertexProperty;
 
   keyValues = keyValues || [];
-  ElementHelper.legalPropertyKeyValueArray(keyValues);
+  // ElementHelper.legalPropertyKeyValueArray(keyValues);
 
   // if (TinkerHelper.inComputerMode(this.graph)) {
   var inComputerMode = false;
@@ -96,8 +98,10 @@ TinkerVertex.prototype.setProperty = function(key, value, keyValues) {
 };
 
 TinkerVertex.prototype.setPropertyGraphMode = function(key, value, keyValues) {
-  var optionalId = ElementHelper.getIdValue(keyValues);
-  ElementHelper.validateProperty(key, value);
+  let vertexProperty;
+  // var optionalId = ElementHelper.getIdValue(keyValues);
+  let optionalId; // temp
+  // ElementHelper.validateProperty(key, value);
 
   if (optionalId) {
     vertexProperty = new TinkerVertexProperty(optionalId.get(), this, key, value);
@@ -105,7 +109,7 @@ TinkerVertex.prototype.setPropertyGraphMode = function(key, value, keyValues) {
     vertexProperty = new TinkerVertexProperty(this, key, value);
   }
 
-  list = this.properties.get(key) || [];
+  const list = this.properties.get(key) || [];
   list.push(vertexProperty);
 
   this.properties.set(key, list);
@@ -139,26 +143,26 @@ TinkerVertex.Iterators = function TinkerVertexIterators() {
 };
 
 inherits(TinkerVertex.Iterators, TinkerElement.Iterators); // extends
-_.extend(TinkerVertex.Iterators.prototype, Vertex.Iterators.prototype, {
-  // properties: function() {
+// _.extend(TinkerVertex.Iterators.prototype, Vertex.Iterators.prototype, {
+//   // properties: function() {
 
-  // },
+//   // },
 
-  // hiddens: function() {
+//   // hiddens: function() {
 
-  // },
+//   // },
 
-  edges: function(direction, branchFactor, labels, element) {
-    var edges = TinkerHelper.getEdges(element, direction, branchFactor, labels);
-    return edges;
-  },
+//   edges: function(direction, branchFactor, labels, element) {
+//     var edges = TinkerHelper.getEdges(element, direction, branchFactor, labels);
+//     return edges;
+//   },
 
-  vertices: function(direction, branchFactor, labels, element) {
-    var vertices = TinkerHelper.getVertices(element, direction, branchFactor, labels);
+//   vertices: function(direction, branchFactor, labels, element) {
+//     var vertices = TinkerHelper.getVertices(element, direction, branchFactor, labels);
 
-    return vertices;
-  },
-}); // implements
+//     return vertices;
+//   },
+// }); // implements
 
 
 

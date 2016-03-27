@@ -1,5 +1,3 @@
-require('es6-shim');
-
 function TinkerIndex(graph, indexClass) {
   this.index = new Map();
   this.indexedKeys = new Set(); // should be HashSet

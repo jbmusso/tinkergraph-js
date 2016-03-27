@@ -1,26 +1,28 @@
-var _ = require('lazy.js');
-require('es6-shim');
+import _ from 'lodash';
+import * as ElementHelper from './ElementHelper';
 
-var MultiIterator = require('gremlin-core-js/src/process/util/multiiterator');
-var ElementHelper = require('gremlin-core-js/src/structure/util/elementhelper');
+// var MultiIterator = require('gremlin-core/src/process/util/multiiterator');
+// var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
 
-var TinkerVertexIterator = require('../utils/tinkervertexiterator');
-var TinkerEdgeIterator = require('../utils/tinkeredgeiterator');
+var TinkerVertexIterator = require('./utils/TinkerVertexIterator');
+var TinkerEdgeIterator = require('./utils/TinkerEdgeIterator');
 
-
+// -------------------------
+// TinkerHelper
+// -------------------------
 function TinkerHelper() {
 }
-
 TinkerHelper.getNextId = function(graph) {
   // return Stream.generate(() -> (++graph.currentId)).filter(id -> !graph.vertices.containsKey(id) && !graph.edges.containsKey(id)).findAny().get();
   return graph.currentId++;
 };
 
 TinkerHelper.addEdge = function(graph, outVertex, inVertex, label, keyValues) {
-  ElementHelper.validateLabel(label);
-  ElementHelper.legalPropertyKeyValueArray(keyValues);
+  // ElementHelper.validateLabel(label);
+  // ElementHelper.legalPropertyKeyValueArray(keyValues);
 
-  idValue = ElementHelper.getIdValue(keyValues) || null;
+  // let idValue = ElementHelper.getIdValue(keyValues) || null;
+  let idValue = null; // temp fix
 
   if (idValue) {
     if (graph.edges.has(idValue)) {
@@ -32,7 +34,7 @@ TinkerHelper.addEdge = function(graph, outVertex, inVertex, label, keyValues) {
 
   var TinkerEdge = require('./tinkeredge'); //temp workaround
   var edge = new TinkerEdge(idValue, outVertex, label, inVertex, graph);
-  ElementHelper.attachProperties(edge, keyValues);
+  ElementHelper.attachProperties(edge, _.toPairs(keyValues));
 
   graph.edges.set(edge.id, edge);
   TinkerHelper.addOutEdge(outVertex, label, edge);

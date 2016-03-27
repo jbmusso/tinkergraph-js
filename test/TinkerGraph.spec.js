@@ -1,6 +1,7 @@
 var _ = require('lodash');
+import { assert } from 'chai';
 
-var TinkerGraph = require('../../src/structure/tinkergraph');
+var TinkerGraph = require('../src/TinkerGraph');
 
 
 describe('Graph', function() {
@@ -108,7 +109,7 @@ describe('Graph', function() {
     });
   });
 
-  describe('.V()', function() {
+  describe.skip('.V()', function() {
     it('should retrieve all vertices from the graph', function() {
       var g = TinkerGraph.open();
       // Add dummy vertices
