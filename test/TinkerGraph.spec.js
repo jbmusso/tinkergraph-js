@@ -1,7 +1,7 @@
 var _ = require('lodash');
 import { assert } from 'chai';
 
-var TinkerGraph = require('../src/TinkerGraph');
+import TinkerGraph from '../src/TinkerGraph'
 
 
 describe('Graph', function() {

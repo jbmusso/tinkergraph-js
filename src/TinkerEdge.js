@@ -11,46 +11,46 @@ var TinkerHelper = require('./TinkerHelper');
 var TinkerProperty = require('./TinkerProperty');
 
 
-function TinkerEdge(id, outVertex, label, inVertex, graph) {
-  TinkerElement.call(this, id, label, graph);
-  this.outVertex = outVertex;
-  this.inVertex = inVertex;
-  // this.graph.edgeIndex.autoUpdate(T.label.getAccessor(), this.label, null, this);
-  this.iterators = new TinkerEdge.Iterators(this);
+class TinkerEdge extends TinkerElement {
+  constructor(id, outVertex, label, inVertex, graph) {
+    super(id, label, graph);
+    this.outVertex = outVertex;
+    this.inVertex = inVertex;
+    // this.graph.edgeIndex.autoUpdate(T.label.getAccessor(), this.label, null, this);
+    this.iterators = new TinkerEdge.Iterators(this);
+  }
+
+  property(key, value) {
+    if (arguments.length === 1) {
+      // get Mode
+      return TinkerElement.prototype.property.call(this, key);
+    } else {
+      this.setProperty(key, value);
+    }
+  }
+
+  setProperty(key, value) {
+    if (TinkerHelper.inComputerMode(this.graph)) {
+      return this.graph.graphView.setProperty(this, key, value);
+    } else {
+      // ElementHelper.validateProperty(key, value);
+
+      var oldProperty = TinkerElement.prototype.property.call(this, key);
+      var newProperty = new TinkerProperty(this, key, value);
+
+      // this.properties.put(key, Arrays.asList(newProperty));
+      this.properties.set(key, [newProperty]);
+      // this.graph.edgeIndex.autoUpdate(key, value, oldProperty.isPresent() ? oldProperty.value() : null, this); // todo: reenable index
+
+      return newProperty;
+    }
+  }
+
+  getIterators() {
+    return this.iterators;
+  }
 }
 
-inherits(TinkerEdge, TinkerElement); // extends
-// _.extend(TinkerEdge.prototype, Edge.prototype); // implements
-
-TinkerEdge.prototype.property = function(key, value) {
-  if (arguments.length === 1) {
-    // get Mode
-    return TinkerElement.prototype.property.call(this, key);
-  } else {
-    this.setProperty(key, value);
-  }
-};
-
-TinkerEdge.prototype.setProperty = function(key, value) {
-  if (TinkerHelper.inComputerMode(this.graph)) {
-    return this.graph.graphView.setProperty(this, key, value);
-  } else {
-    // ElementHelper.validateProperty(key, value);
-
-    var oldProperty = TinkerElement.prototype.property.call(this, key);
-    var newProperty = new TinkerProperty(this, key, value);
-
-    // this.properties.put(key, Arrays.asList(newProperty));
-    this.properties.set(key, [newProperty]);
-    // this.graph.edgeIndex.autoUpdate(key, value, oldProperty.isPresent() ? oldProperty.value() : null, this); // todo: reenable index
-
-    return newProperty;
-  }
-};
-
-TinkerEdge.prototype.getIterators = function() {
-  return this.iterators;
-};
 
 TinkerEdge.Iterators = function TinkerEdgeIterators(edge) {
   this.edge = edge;
