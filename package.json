@@ -26,11 +26,7 @@
   },
   "homepage": "https://github.com/gulthor/tinkergraph-js",
   "dependencies": {
-    "babel-preset-node5": "^11.0.1",
-    "gremlin-core": "gulthor/gremlin-core-js",
-    "lazy.js": "^0.3.2",
-    "lodash": "^4.6.1",
-    "underscore": "^1.7.0"
+    "lodash": "^4.6.1"
   },
   "devDependencies": {
     "babel-preset-node5": "^11.0.1",
