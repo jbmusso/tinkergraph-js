@@ -3,7 +3,7 @@ import { inherits } from 'util';
 import _ from 'lodash';
 
 import * as ElementHelper from './ElementHelper';
-import TinkerHelper from './TinkerHelper';
+import * as TinkerHelper from './TinkerHelper';
 import TinkerElement from './TinkerElement';
 import TinkerVertexProperty from './TinkerVertexProperty';
 

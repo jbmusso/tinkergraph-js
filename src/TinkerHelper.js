@@ -4,17 +4,13 @@ import TinkerVertexIterator from './utils/TinkerVertexIterator';
 import TinkerEdgeIterator from './utils/TinkerEdgeIterator';
 import * as ElementHelper from './ElementHelper';
 
-// -------------------------
-// TinkerHelper
-// -------------------------
-function TinkerHelper() {
-}
-TinkerHelper.getNextId = function(graph) {
+
+export const getNextId = (graph) => {
   // return Stream.generate(() -> (++graph.currentId)).filter(id -> !graph.vertices.containsKey(id) && !graph.edges.containsKey(id)).findAny().get();
   return graph.currentId++;
 };
 
-TinkerHelper.addEdge = function(graph, outVertex, inVertex, label, keyValues) {
+export const addEdge = (graph, outVertex, inVertex, label, keyValues) => {
   // ElementHelper.validateLabel(label);
   // ElementHelper.legalPropertyKeyValueArray(keyValues);
 
@@ -25,7 +21,7 @@ TinkerHelper.addEdge = function(graph, outVertex, inVertex, label, keyValues) {
     if (graph.edges.has(idValue)) {
       throw new Error('Graph.Exceptions.edgeWithIdAlreadyExists'+ idValue);
     } else {
-      idValue = TinkerHelper.getNextId(graph);
+      idValue = getNextId(graph);
     }
   }
 
@@ -34,12 +30,12 @@ TinkerHelper.addEdge = function(graph, outVertex, inVertex, label, keyValues) {
   ElementHelper.attachProperties(edge, _.toPairs(keyValues));
 
   graph.edges.set(edge.id, edge);
-  TinkerHelper.addOutEdge(outVertex, label, edge);
-  TinkerHelper.addInEdge(inVertex, label, edge);
+  addOutEdge(outVertex, label, edge);
+  addInEdge(inVertex, label, edge);
   return edge;
 };
 
-TinkerHelper.addOutEdge = function(vertex, label, edge) {
+export const addOutEdge = (vertex, label, edge) => {
   var edges = vertex.outEdges.get(label);
 
   if (!edges) {
@@ -50,7 +46,7 @@ TinkerHelper.addOutEdge = function(vertex, label, edge) {
   edges.add(edge);
 };
 
-TinkerHelper.addInEdge = function(vertex, label, edge) {
+export const addInEdge = (vertex, label, edge) => {
   var edges = vertex.inEdges[label];
 
   if (!edges) {
@@ -61,30 +57,30 @@ TinkerHelper.addInEdge = function(vertex, label, edge) {
   edges.add(edge);
 };
 
-TinkerHelper.dropView = function(graph) {
+export const dropView = (graph) => {
   graph.graphView = null;
 };
 
-TinkerHelper.queryVertexIndex = function(graph, key, value) {
+export const queryVertexIndex = (graph, key, value) => {
   return graph.vertexIndex.get(key, value);
 };
 
 // to be continued....
 
-TinkerHelper.getProperties = function(element) {
+export const getProperties = (element) => {
   return element.properties;
 };
 
-TinkerHelper.getEdges = function(structure, direction, branchFactor, labels) {
+export const getEdges = (structure, direction, branchFactor, labels) => {
   if (structure.constructor.name === 'TinkerVertex') {
     var vertex = structure;
-    return TinkerHelper.getEdgesFromVertex(vertex, direction, branchFactor, labels);
+    return getEdgesFromVertex(vertex, direction, branchFactor, labels);
   } else {
-    return TinkerHelper.getEdgesFromGraph();
+    return getEdgesFromGraph();
   }
 };
 
-TinkerHelper.getEdgesFromVertex = function(vertex, direction, branchFactor, labels) { // JS specific method
+export const getEdgesFromVertex = (vertex, direction, branchFactor, labels) => { // JS specific method
   var edges = new MultiIterator();
   var outEdges;
   var inEdges;
@@ -118,11 +114,11 @@ TinkerHelper.getEdgesFromVertex = function(vertex, direction, branchFactor, labe
   return new TinkerEdgeIterator(edges, branchFactor);
 };
 
-TinkerHelper.getEdgesFromGraph = function() { // JS specific
+export const getEdgesFromGraph = () => { // JS specific
   throw new Error('Not yet implemented in TinkerHelper.getEdgesFromGraph');
 };
 
-TinkerHelper.getVertices = function(structure, direction, branchFactor, labels) {
+export const getVertices = (structure, direction, branchFactor, labels) => {
   var vertex;
   var edge;
   var graph;
@@ -132,17 +128,17 @@ TinkerHelper.getVertices = function(structure, direction, branchFactor, labels) 
 
   if (structure instanceof TinkerVertex) { // structure = vertex
     vertex = structure;
-    return TinkerHelper.getVerticesFromVertex(vertex, direction, branchFactor, labels);
+    return getVerticesFromVertex(vertex, direction, branchFactor, labels);
   } else if (structure instanceof TinkerEdge) { // structure = edge
     edge = structure;
-    return TinkerHelper.getVerticesFromEdge(edge, direction);
+    return getVerticesFromEdge(edge, direction);
   } else { // structure = graph
     graph = structure;
     return Array.from(graph.vertices);
   }
 };
 
-TinkerHelper.getVerticesFromVertex = function(vertex, direction, branchFactor, labels) { // JS specific method
+export const getVerticesFromVertex = (vertex, direction, branchFactor, labels) => { // JS specific method
   var edges;
   var vertexIterator;
   var vertices;
@@ -150,14 +146,14 @@ TinkerHelper.getVerticesFromVertex = function(vertex, direction, branchFactor, l
   var inVertexIterator;
 
   if (direction !== "both") {
-    edges = TinkerHelper.getEdges(vertex, direction, branchFactor, labels);
+    edges = getEdges(vertex, direction, branchFactor, labels);
 
     vertexIterator = new TinkerVertexIterator(edges, direction);
     return vertexIterator;
   } else {
     vertices = new MultiIterator(branchFactor);
-    outVertexIterator = new TinkerVertexIterator(TinkerHelper.getEdges(vertex, 'out', branchFactor, labels), 'out');
-    inVertexIterator = new TinkerVertexIterator(TinkerHelper.getEdges(vertex, 'in', branchFactor, labels), 'in');
+    outVertexIterator = new TinkerVertexIterator(getEdges(vertex, 'out', branchFactor, labels), 'out');
+    inVertexIterator = new TinkerVertexIterator(getEdges(vertex, 'in', branchFactor, labels), 'in');
 
     vertices.addIterator(outVertexIterator);
     vertices.addIterator(inVertexIterator);
@@ -166,7 +162,7 @@ TinkerHelper.getVerticesFromVertex = function(vertex, direction, branchFactor, l
   }
 };
 
-TinkerHelper.getVerticesFromEdge = function(edge, direction) { // JS specific method
+export const getVerticesFromEdge = (edge, direction) => { // JS specific method
   var vertices = [];
 
   if (direction === 'out' || direction === 'both') {
@@ -180,11 +176,11 @@ TinkerHelper.getVerticesFromEdge = function(edge, direction) { // JS specific me
   return vertices.values(); // iterator
 };
 
-TinkerHelper.createGraphView = function(graph, isolation, computeKeys) {
+export const createGraphView = (graph, isolation, computeKeys) => {
   var graphView = new TinkerGraphView(isolation, computeKeys);
   graph.graphView = graphView;
 
   return graphView;
 };
 
-module.exports = TinkerHelper;
+// module.exports = TinkerHelper;

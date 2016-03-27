@@ -3,7 +3,7 @@ import _ from 'lodash';
 import * as ElementHelper from './ElementHelper';
 
 import TinkerIndex from './TinkerIndex';
-import TinkerHelper from './TinkerHelper';
+import * as TinkerHelper from './TinkerHelper';
 import TinkerVertex from './TinkerVertex';
 import TinkerEdge from './TinkerEdge';
 
