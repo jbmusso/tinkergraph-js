@@ -1,69 +1,46 @@
 tinkergraph-js
 ==============
 
-A pure JavaScript implementation of TinkerGraph in-memory graph database from [TinkerPop3 framework](https://github.com/tinkerpop3) that works in Node.js and in the browser (soon).
+A pure JavaScript implementation of the TinkerGraph in-memory graph database from the [Apache TinkerPop framework](http://tinkerpop.incubator.apache.org/) that works in Node.js and in the browser.
 
-This library is a work in progress and is not yet published on npm. It requires an external dependency (https://github.com/jbmusso/gremlin-core-js) listed in the `package.json` file.
+This library is rather low-level as it only exposes a raw property graph data structure (more formally: a directed, binary, attributed multi-graph). It is perfectly fine for use if your library needs an in-memory data structure with a simple public API. If you're looking for a higher level graph data structure, checkout the Gremlin JavaScript implementation of TinkerGraph: [gremlin-tinkergraph](https://github.com/jbmusso/gremlin-tinkergraph).
 
-Both libraries will be published as v3.0.0 on npm once TinkerPop3 final version is released and all features are ported. They'll then track all subsequent releases.
+This library is a work in progress and is not yet published on npm. It is not production ready.
 
 ## Install
 
 ```
-$ npm install jbmusso/tinkergraph-js -S
+$ npm install jbmusso/tinkergraph-js --save
 ```
 
 Run tests with:
 
 ```
-$ gulp test
+$ npm test
 ```
 
 ## Usage
 
-The library is a 1:1 port of TinkerGraph. Please refer to [Gremlin docs](http://gremlindocs.com/) for a complete guide on using steps.
-
-## Features
-
-TinkerGraph structure features are tested and working. Features related to setting ids on creation are still work in progress.
+The library is a port of TinkerGraph, without the Gremlin implementation. It tries to mimic while still providing more idiomatic JavaScript function signatures.
 
 ### Graph structure
 
 #### Adding a vertex
-* `g.addVertex('key1', 'value1', 'key2', 'value2');`
-* `g.addVertex({ key: 'value', key2: 'value2' });` (alternatively, JS only)
+
+```javascript
+g.addVertex('key1', 'value1', 'key2', 'value2');
+g.addVertex({ key: 'value', key2: 'value2' }); // Alternatively, JS only
+```
 
 #### Adding an edge
-* `vertex.addEdge('label', vertex, { key: 'value' });`
 
-### Gremlin steps
-
-#### Working steps
-* V - does not accept filters yet
-
-Vertex and edge steps
-* out / outE / outV
-* in / inE / inV
-* both / bothE / bothV
-
-#### Being developed
-* E
-* path
-* map
-* groupBy
-* groupCount
-* sideEffect
-* ...
-
-### Traversal methods
-
-* `traversal.forEach(callback)` (working)
-* `traversal.next()`
-* ...
+```javascript
+vertex.addEdge('label', vertex, { key: 'value' });
+```
 
 ## Performance
 
-TinkerGraph-js and gremlin-core-js internally uses iterators, ES6 Map and Set classes. All traversals are executed lazily.
+tinkergraph-js uses iterators, ES6 Map and Set classes.
 
-On my laptop (2.3 Ghz i7 cpu, 16 Gb ram), TinkerGraph-js adds approximately 20000 vertices per second to the graph.
+On my laptop (2.3 Ghz i7 cpu, 16 Gb ram), tinkergraph-js adds approximately 20000 vertices per second to the graph.
 
