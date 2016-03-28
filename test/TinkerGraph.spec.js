@@ -170,5 +170,47 @@ describe('Graph', () => {
 
       assert.throws(() => g.createIndex('', 'edge'), regex);
     });
+
+    describe.skip('Hitting indices', function () {
+      // Vertex indices update and removal
+      it('should update vertex indices in a new graph', () => {
+
+      });
+
+      it('should remove vertex from an index', () => {
+
+      });
+
+      it('should update vertex indices in an existing graph', () => {
+
+      });
+
+      // Edge indices update and removal
+      it('should update edge indices in a new graph', () => {
+
+      });
+
+      it('should remove edge from an index', () => {
+
+      });
+
+      it('should update edge indices in an existing graph', () => {
+
+      });
+    });
+
+    describe.skip('Mutation of removed element', function () {
+      it('should not modify a vertex that was removed', () => {
+
+      });
+
+      it('should not add edge to a vertex that was removed', () => {
+
+      });
+
+      it('should not read value of property on vertex that was removed', () => {
+
+      });
+    });
   });
 });
