@@ -59,8 +59,8 @@ TinkerElement.Iterators = function() {
 // inherits(TinkerElement.Iterators, Element.Iterators);
 
 TinkerElement.Iterators.prototype = {
-  hiddens: function(propertyKeys) {
-    var propertyIterator = properties.values().stream()
+  hiddens(propertyKeys) {
+    const propertyIterator = properties.values().stream()
       .flatMap(function(list) {
         list.stream();
       }).collect(Collectors.toList()).iterator();

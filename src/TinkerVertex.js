@@ -7,12 +7,10 @@ import * as TinkerHelper from './TinkerHelper';
 import TinkerElement from './TinkerElement';
 import TinkerVertexProperty from './TinkerVertexProperty';
 
-// var ElementHelper = require('gremlin-core/src/structure/util/elementhelper');
 
 class TinkerVertex extends TinkerElement {
   constructor(id, label, graph) {
     super(id, label, graph);
-    // TinkerElement.apply(this, arguments);
     this.id = id;
     this.label = label;
     this.graph = graph;
@@ -42,22 +40,17 @@ class TinkerVertex extends TinkerElement {
       const list = this.properties.get(key);
 
       if (list.length > 1) {
-        new Error('Vertex.Exceptions.multiplePropertiesExistForProvidedKey(key)');
+        throw new Error('Vertex.Exceptions.multiplePropertiesExistForProvidedKey(key)');
       }
-      else {
-        return list[0];
-      }
-    } else {
-      // return VertexProperty.empty();
-      return {}; // temp fix
+      return list[0];
     }
+
+    // return VertexProperty.empty();
+    return {}; // temp fix
   };
 
   // JS specific method for setting a property (see property method above)
-  setProperty(key, value, keyValues) {
-    var vertexProperty;
-
-    keyValues = keyValues || [];
+  setProperty(key, value, keyValues = []) {
     // ElementHelper.legalPropertyKeyValueArray(keyValues);
 
     // let vertexProperty;
@@ -65,11 +58,9 @@ class TinkerVertex extends TinkerElement {
     let optionalId; // temp
     // ElementHelper.validateProperty(key, value);
 
-    if (optionalId) {
-      vertexProperty = new TinkerVertexProperty(optionalId.get(), this, key, value);
-    } else {
-      vertexProperty = new TinkerVertexProperty(this, key, value);
-    }
+    const vertexProperty = optionalId
+      ? new TinkerVertexProperty(optionalId.get(), this, key, value)
+      : new TinkerVertexProperty(this, key, value);
 
     const list = this.properties.get(key) || [];
     list.push(vertexProperty);
@@ -83,13 +74,13 @@ class TinkerVertex extends TinkerElement {
   };
 
   addEdge(label, vertex, keyValues) { //...keyValues
-    var edge = TinkerHelper.addEdge(this.graph, this, vertex, label, keyValues);
+    const edge = TinkerHelper.addEdge(this.graph, this, vertex, label, keyValues);
 
     return edge;
   };
 
   remove() {
-    var edges = [];
+    const edges = [];
     this.getIterators().edges(Direction.BOTH, Number.MAX_SAFE_INTEGER).forEach(edges.push);
     edges.forEach(Edge.remove);
     this.properties.clear();

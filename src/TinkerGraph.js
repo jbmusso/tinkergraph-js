@@ -25,7 +25,7 @@ class TinkerGraph {
       throw new Error('throw Graph.Exceptions.elementNotFound(Vertex.class, null);');
     }
 
-    var vertex = this.vertices.get(id);
+    const vertex = this.vertices.get(id);
 
     if (!vertex) {
       throw new Error('Graph.Exceptions.elementNotFound(Vertex.class, id);');
@@ -52,9 +52,8 @@ class TinkerGraph {
         idValue = TinkerHelper.getNextId(this);
     }
 
-    var vertex = new TinkerVertex(idValue, label, this);
+    const vertex = new TinkerVertex(idValue, label, this);
     this.vertices.set(vertex.id, vertex);
-
 
     ElementHelper.attachProperties(vertex, keyValues);
 
@@ -62,7 +61,7 @@ class TinkerGraph {
   }
 
   V() {
-    var traversal = new TinkerGraphTraversal(this, Vertex);
+    const traversal = new TinkerGraphTraversal(this, Vertex);
 
     return traversal;
   }

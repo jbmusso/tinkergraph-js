@@ -19,7 +19,7 @@ class TinkerEdge extends TinkerElement {
   property(key, value) {
     if (arguments.length === 1) {
       // get Mode
-      return TinkerElement.prototype.property.call(this, key);
+      return super.property(key);
     } else {
       this.setProperty(key, value);
     }
@@ -28,8 +28,8 @@ class TinkerEdge extends TinkerElement {
   setProperty(key, value) {
     // ElementHelper.validateProperty(key, value);
 
-    var oldProperty = TinkerElement.prototype.property.call(this, key);
-    var newProperty = new TinkerProperty(this, key, value);
+    const oldProperty = super.property(key);
+    const newProperty = new TinkerProperty(this, key, value);
 
     // this.properties.put(key, Arrays.asList(newProperty));
     this.properties.set(key, [newProperty]);
@@ -52,15 +52,15 @@ inherits(TinkerEdge.Iterators, TinkerElement.Iterators);
 // _.extend(TinkerEdge.Iterators.prototype, Edge.Iterators.prototype);
 
 TinkerEdge.Iterators.prototype = {
-  vertexIterator: function(direction) { // element as last parameter diverge from Java codebase
+  vertexIterator(direction) { // element as last parameter diverge from Java codebase
     return TinkerHelper.getVertices(this.edge, direction);
   },
 
-  properties: function(propertyKeys) { //...propertyKeys
+  properties(propertyKeys) { //...propertyKeys
     return TinkerElement.Iterators.prototype.properties.apply(this, propertyKeys);
   },
 
-  hiddens: function(propertyKeys) { //...propertyKeys
+  hiddens(propertyKeys) { //...propertyKeys
     return TinkerElement.Iterators.prototype.hiddens.apply(this, propertyKeys);
   }
 };

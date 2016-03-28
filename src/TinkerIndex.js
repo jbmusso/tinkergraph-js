@@ -8,14 +8,14 @@ class TinkerIndex {
   }
 
   put(key, value, element) {
-    var keyMap = this.index.get(key);
+    let keyMap = this.index.get(key);
 
     if (!keyMap) {
       keyMap = new Map();
       this.index.put(key, keyMap);
     }
 
-    var objects = keyMap.get(value);
+    let objects = keyMap.get(value);
     if (!objects) {
       objects = new Set();
       keyMap.put(value, objects);
@@ -25,40 +25,30 @@ class TinkerIndex {
   }
 
   get(key, value) {
-    var keyMap = this.index.get(key);
+    const keyMap = this.index.get(key);
 
     if (!keyMap) {
       return []; // Java: Collections.emptyList()
-    } else {
-      var set = keyMap.get(value);
-      if (!set) {
-        return [];
-      } else {
-        return Array.from(set); // Java: new ArrayList<>(set);
-      }
     }
+    return keyMap.get(value) ? Array.from(set) : [];
   }
 
   count(key, value) {
-    var keyMap = this.index.get(key);
+    const keyMap = this.index.get(key);
 
     if (!keyMap) {
       return 0;
-    } else {
-      var set = keyMap.get(value);
-      if (!set) {
-        return 0;
-      } else {
-        return set.size;
-      }
     }
+    const set = keyMap.get(value);
+
+    return set ? set.size : 0;
   }
 
   remove(key, value, element) {
-    var keyMap = this.index.get(key);
+    const keyMap = this.index.get(key);
 
     if (!keyMap) {
-      var objects = keyMap.get(value);
+      const objects = keyMap.get(value);
       if (objects) {
         objects.remove(element);
         if (objects.size === 0) {
