@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
-import TinkerVertexIterator from './utils/TinkerVertexIterator';
-import TinkerEdgeIterator from './utils/TinkerEdgeIterator';
-import * as ElementHelper from './ElementHelper';
+import TinkerVertexIterator from '../utils/TinkerVertexIterator';
+import TinkerEdgeIterator from '../utils/TinkerEdgeIterator';
+import * as ElementHelper from '../ElementHelper';
 
 
 export const getNextId = (graph) => {

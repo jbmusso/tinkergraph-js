@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import * as ElementHelper from './ElementHelper';
+import * as ElementHelper from '../ElementHelper';
 
 import TinkerIndex from './TinkerIndex';
 import * as TinkerHelper from './TinkerHelper';
@@ -14,7 +14,6 @@ class TinkerGraph {
     this.vertices = new Map();
     this.edges = new Map();
     // this.variables = new TinkerGraphVariables();
-    this.graphView = null;
 
     this.vertexIndex = new TinkerIndex(this, TinkerVertex);
     this.edgeIndex = new TinkerIndex(this, TinkerEdge);

@@ -4,8 +4,7 @@ import TinkerHelper from './TinkerHelper';
 
 
 class TinkerElement {
-  constructor(id, label, graph) {
-    this.graph = graph;
+  constructor(id, label) {
     this.id = id;
     this.label = label;
     this.properties = new Map();
@@ -19,34 +18,12 @@ class TinkerElement {
     return this.id;
   }
 
-  label() {
-    return this.label;
-  }
-
-  keys() {
-    return this.properties.keySet().stream()
-      .filter(function(key) {
-        return !GraphKey.isHidden(key);
-      })
-      .collect(Collectors.toSet());
-  }
-
-  hiddenKeys() {
-    return this.properties.keySet().stream()
-      .filter(GraphKey.isHidden)
-      .map(Graph.Key.unHide)
-      .collect(Collectors.toSet());
-  }
-
   property(key) {
-    var list;
-
     if (this.properties.has(key)) {
       var property = this.properties.get(key)[0];
 
       return property;
     } else {
-      // return Property.empty();
       return {} // temp fix;
     }
   }

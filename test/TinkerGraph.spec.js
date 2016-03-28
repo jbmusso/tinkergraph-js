@@ -1,7 +1,7 @@
 var _ = require('lodash');
 import { assert } from 'chai';
 
-import TinkerGraph from '../src/TinkerGraph'
+import TinkerGraph from '../src/structure/TinkerGraph'
 
 
 describe('Graph', function() {
@@ -96,36 +96,4 @@ describe('Graph', function() {
     });
   });
 
-  describe('.v()', function() {
-    beforeEach(function() {
-      g = TinkerGraph.open();
-    });
-
-    it('should retrieve a vertex from the graph', function() {
-      var createdVertex = g.addVertex('name', 'ob');
-      var fetchedVertex = g.v(0);
-
-      assert.equal(fetchedVertex, createdVertex);
-    });
-  });
-
-  describe.skip('.V()', function() {
-    it('should retrieve all vertices from the graph', function() {
-      var g = TinkerGraph.open();
-      // Add dummy vertices
-      g.addVertex('name', 'alice');
-      g.addVertex('name', 'bob');
-      g.addVertex('name', 'man');
-
-      var count = 0;
-
-      g.V().forEach(function(vertex) {
-        assert.isDefined(vertex);
-        assert.equal(vertex.constructor.name, 'TinkerVertex');
-        count++;
-      });
-
-      assert.equal(count, 3);
-    });
-  });
 });

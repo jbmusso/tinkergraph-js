@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import * as ElementHelper from './ElementHelper';
+import * as ElementHelper from '../ElementHelper';
 
 import TinkerElement from './TinkerElement';
 import TinkerHelper from './TinkerHelper';
