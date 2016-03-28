@@ -1,26 +1,24 @@
 var _ = require('lodash');
 import { assert } from 'chai';
 
-import TinkerGraph from '../src/structure/TinkerGraph'
+import { createGraph } from '../src';
 
 
 describe('Graph', function() {
-  var g;
-
   describe('.addvertex()', function() {
-    beforeEach(function() {
-      g = TinkerGraph.open();
-    });
-
     it('should add a vertex with no property', function() {
+      const g = createGraph();
       var v = g.addVertex();
+
       assert.equal(g.vertices.size, 1);
       assert.equal(v.id, 0);
     });
 
     describe('method signatures', function() {
-      it('should add a vertex with key/value passed as multiple arguments', function() {
+      it('should add a vertex with key/value passed as multiple arguments',   function() {
+        const g = createGraph();
         var v = g.addVertex('name', 'alice', 'foo', 'bar');
+
         assert.equal(g.vertices.size, 1);
         assert.equal(v.id, 0);
         assert.equal(v.property('name').value, 'alice');
@@ -28,7 +26,9 @@ describe('Graph', function() {
       });
 
       it('should add a vertex with properties passed as a single object argument', function() {
+        const g = createGraph();
         var v = g.addVertex({ name: 'bob', baz: 'duh' });
+
         assert.equal(g.vertices.size, 1);
         assert.equal(v.id, 0);
         assert.equal(v.property('name').value, 'bob');
@@ -38,6 +38,7 @@ describe('Graph', function() {
 
     describe('multiple vertices creation', function() {
       it('should add many vertices to the graph', function() {
+        const g = createGraph();
         var v1 = g.addVertex({ name: 'bob' });
         var v2 = g.addVertex({ name: 'alice' });
 
@@ -45,6 +46,7 @@ describe('Graph', function() {
       });
 
       it('should increment vertices ids properly', function() {
+        const g = createGraph();
         var v1 = g.addVertex({ name: 'bob' });
         var v2 = g.addVertex({ name: 'alice' });
 
@@ -55,11 +57,8 @@ describe('Graph', function() {
   });
 
   describe('.addEdge()', function() {
-    beforeEach(function() {
-      g = TinkerGraph.open();
-    });
-
     it('should add an edge with no property', function() {
+      const g = createGraph();
       var v1 = g.addVertex();
       var v2 = g.addVertex();
       var e = v1.addEdge('knows', v2);
@@ -77,6 +76,7 @@ describe('Graph', function() {
     });
 
     it('should add an edge with properties', function() {
+      const g = createGraph();
       var v1 = g.addVertex('name', 'bob');
       var v2 = g.addVertex({ name: 'alice' });
       var e = v1.addEdge('likes', v2, { since: 'now' });
