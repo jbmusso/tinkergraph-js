@@ -130,5 +130,45 @@ describe('Graph', () => {
       g.dropIndex('oid1', 'edge');
       assert.equal(edgeKeys.size, 0);
     });
+
+    it('should not create vertex index with a non-string key', () => {
+      const g = createGraph();
+      const regex = /^Index key must be a string value/;
+      const VERTEX = 'vertex';
+
+      assert.throws(() => g.createIndex(null, VERTEX), regex);
+      assert.throws(() => g.createIndex(undefined, VERTEX), regex);
+      assert.throws(() => g.createIndex(0, VERTEX), regex);
+      assert.throws(() => g.createIndex(1, VERTEX), regex);
+      assert.throws(() => g.createIndex([], VERTEX), regex);
+      assert.throws(() => g.createIndex({}, VERTEX), regex);
+    });
+
+    it('should not create vertex index with a non-string key', () => {
+      const g = createGraph();
+      const regex = /^Index key must be a string value/;
+      const EDGE = 'edge';
+
+      assert.throws(() => g.createIndex(null, EDGE), regex);
+      assert.throws(() => g.createIndex(undefined, EDGE), regex);
+      assert.throws(() => g.createIndex(0, EDGE), regex);
+      assert.throws(() => g.createIndex(1, EDGE), regex);
+      assert.throws(() => g.createIndex([], EDGE), regex);
+      assert.throws(() => g.createIndex({}, EDGE), regex);
+    });
+
+    it('should not create vertex index with an empty key', () => {
+      const g = createGraph();
+      const regex = /Index key cannot be an empty string/
+
+      assert.throws(() => g.createIndex('', 'vertex'), regex);
+    });
+
+    it('should not create edge index with an empty key', () => {
+      const g = createGraph();
+      const regex = /Index key cannot be an empty string/
+
+      assert.throws(() => g.createIndex('', 'edge'), regex);
+    });
   });
 });

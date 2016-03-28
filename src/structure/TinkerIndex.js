@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class TinkerIndex {
   constructor(graph, indexClass) {
     this.index = new Map();
@@ -84,12 +86,12 @@ class TinkerIndex {
   }
 
   createKeyIndex(key) {
-    if (!key) {
-      throw new Error('Graph.Exceptions.argumentCanNotBeNull("key")');
+    if (!_.isString(key)) {
+      throw new Error(`Index key must be a string value: ${key}`);
     }
 
     if (key === '') {
-      throw new Error('IllegalArgumentException("The key for the index cannot be an empty string")');
+      throw new Error('Index key cannot be an empty string');
     }
 
     if (this.indexedKeys.has(key)) {
