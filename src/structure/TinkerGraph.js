@@ -73,15 +73,47 @@ class TinkerGraph {
     return new TinkerTraversal(this);
   }
 
-  getIndexedKeys(elementClass) {
-    // todo: remove switch?
-    switch (elementClass.name) {
-      case 'Vertex':
-        return this.vertexIndex.getIndexedKeys();
-      case 'Edge':
-        return this.edgeIndex.getIndexedKeys();
+  getIndexedKeys(elementClass = '') {
+    switch (elementClass.toLowerCase()) {
+      case 'vertex':
+        return this.vertexIndex.indexedKeys;
+      case 'edge':
+        return this.edgeIndex.indexedKeys;
       default:
-        throw new Error('IllegalArgumentException("Class is not indexable: " + elementClass)');
+        throw new Error(`Class is not indexable: ${elementClass}`);
+    }
+  }
+
+  createIndex(key, elementClass = '') {
+    switch (elementClass.toLowerCase()) {
+      case 'vertex':
+        if (!this.vertexIndex) {
+          this.vertexIndex = new TinkerIndex(this, elementClass);
+        }
+        this.vertexIndex.createKeyIndex(key);
+        break;
+      case 'edge':
+        if (!this.edgeIndex) {
+          this.edgeIndex = new TinkerIndex(this, elementClass);
+        }
+        this.edgeIndex.createKeyIndex(key);
+        break;
+      default:
+        throw new Error(`Class is not indexable: ${elementClass}`);
+
+    }
+  }
+
+  dropIndex(key, elementClass = '') {
+    switch (elementClass.toLowerCase()) {
+      case 'vertex':
+        this.vertexIndex && this.vertexIndex.dropKeyIndex(key);
+        break;
+      case 'edge':
+        this.edgeIndex && this.edgeIndex.dropKeyIndex(key);
+        break;
+      default:
+        throw new Error(`Class is not indexable: ${elementClass}`);
     }
   }
 }

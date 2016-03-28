@@ -95,4 +95,40 @@ describe('Graph', () => {
       assert.equal(v2.inEdges.get('likes').values().next().value, e);
     });
   });
+
+
+  describe('Indices', () => {
+    it('should manage indices', () => {
+      const g = createGraph();
+      const vertexKeys = g.getIndexedKeys('vertex');
+      assert.equal(vertexKeys.size, 0);
+
+      const edgeKeys = g.getIndexedKeys('edge');
+      assert.equal(edgeKeys.size, 0);
+
+      g.createIndex('name1', 'vertex');
+      g.createIndex('name2', 'vertex');
+      // Add the same index twice to check idempotence
+      g.createIndex('name1', 'vertex');
+      g.createIndex('oid1', 'edge');
+      g.createIndex('oid2', 'edge');
+
+      assert.sameMembers(Array.from(vertexKeys.values()), ['name1', 'name2']);
+      assert.sameMembers(Array.from(edgeKeys.values()), ['oid1', 'oid2']);
+
+      g.dropIndex('name2', 'vertex');
+      assert.equal(vertexKeys.size, 1);
+      assert.equal(vertexKeys.values().next().value, 'name1');
+
+      g.dropIndex('name1', 'vertex');
+      assert.equal(vertexKeys.size, 0);
+
+      g.dropIndex('oid2', 'edge');
+      assert.equal(edgeKeys.size, 1);
+      assert.equal(edgeKeys.values().next().value, 'oid1');
+
+      g.dropIndex('oid1', 'edge');
+      assert.equal(edgeKeys.size, 0);
+    });
+  });
 });

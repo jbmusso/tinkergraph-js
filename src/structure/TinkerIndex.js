@@ -109,6 +109,14 @@ class TinkerIndex {
   getIndexedKeys() {
     return this.indexedKeys;
   }
+
+  dropKeyIndex(key) {
+    if (this.index.has(key)) {
+      this.index.delete(key);
+    }
+
+    this.indexedKeys.delete(key);
+  }
 }
 
 
