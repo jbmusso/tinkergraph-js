@@ -1,7 +1,10 @@
-// import TinkerGraph from './structure/TinkerGraph';
+import TinkerGraph from './structure/TinkerGraph';
 
 
+export const createGraph = () => {
+  return new TinkerGraph()
+}
 
-// export default {
-//   TinkerGraph
-// };
+export default {
+  createGraph
+};
