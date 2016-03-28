@@ -1,23 +1,23 @@
-var _ = require('lodash');
+import _ from 'lodash';
 import { assert } from 'chai';
 
 import { createGraph } from '../src';
 
 
-describe('Graph', function() {
-  describe('.addvertex()', function() {
-    it('should add a vertex with no property', function() {
+describe('Graph', () => {
+  describe('.addvertex()', () => {
+    it('should add a vertex with no property', () => {
       const g = createGraph();
-      var v = g.addVertex();
+      const v = g.addVertex();
 
       assert.equal(g.vertices.size, 1);
       assert.equal(v.id, 0);
     });
 
-    describe('method signatures', function() {
-      it('should add a vertex with key/value passed as multiple arguments',   function() {
+    describe('method signatures', () => {
+      it('should add a vertex with key/value passed as multiple arguments', () => {
         const g = createGraph();
-        var v = g.addVertex('name', 'alice', 'foo', 'bar');
+        const v = g.addVertex('name', 'alice', 'foo', 'bar');
 
         assert.equal(g.vertices.size, 1);
         assert.equal(v.id, 0);
@@ -25,9 +25,9 @@ describe('Graph', function() {
         assert.equal(v.property('foo').value, 'bar');
       });
 
-      it('should add a vertex with properties passed as a single object argument', function() {
+      it('should add a vertex with properties passed as a single object argument', () => {
         const g = createGraph();
-        var v = g.addVertex({ name: 'bob', baz: 'duh' });
+        const v = g.addVertex({ name: 'bob', baz: 'duh' });
 
         assert.equal(g.vertices.size, 1);
         assert.equal(v.id, 0);
@@ -36,19 +36,19 @@ describe('Graph', function() {
       });
     });
 
-    describe('multiple vertices creation', function() {
-      it('should add many vertices to the graph', function() {
+    describe('multiple vertices creation', () => {
+      it('should add many vertices to the graph', () => {
         const g = createGraph();
-        var v1 = g.addVertex({ name: 'bob' });
-        var v2 = g.addVertex({ name: 'alice' });
+        const v1 = g.addVertex({ name: 'bob' });
+        const v2 = g.addVertex({ name: 'alice' });
 
         assert.equal(g.vertices.size, 2);
       });
 
-      it('should increment vertices ids properly', function() {
+      it('should increment vertices ids properly', () => {
         const g = createGraph();
-        var v1 = g.addVertex({ name: 'bob' });
-        var v2 = g.addVertex({ name: 'alice' });
+        const v1 = g.addVertex({ name: 'bob' });
+        const v2 = g.addVertex({ name: 'alice' });
 
         assert.equal(v1.id, 0);
         assert.equal(v2.id, 1);
@@ -56,12 +56,12 @@ describe('Graph', function() {
     });
   });
 
-  describe('.addEdge()', function() {
-    it('should add an edge with no property', function() {
+  describe('.addEdge()', () => {
+    it('should add an edge with no property', () => {
       const g = createGraph();
-      var v1 = g.addVertex();
-      var v2 = g.addVertex();
-      var e = v1.addEdge('knows', v2);
+      const v1 = g.addVertex();
+      const v2 = g.addVertex();
+      const e = v1.addEdge('knows', v2);
 
       assert.equal(g.edges.size, 1);
       assert.equal(e.label, 'knows');
@@ -75,11 +75,11 @@ describe('Graph', function() {
       assert.equal(v2.inEdges.get('knows').values().next().value, e);
     });
 
-    it('should add an edge with properties', function() {
+    it('should add an edge with properties', () => {
       const g = createGraph();
-      var v1 = g.addVertex('name', 'bob');
-      var v2 = g.addVertex({ name: 'alice' });
-      var e = v1.addEdge('likes', v2, { since: 'now' });
+      const v1 = g.addVertex('name', 'bob');
+      const v2 = g.addVertex({ name: 'alice' });
+      const e = v1.addEdge('likes', v2, { since: 'now' });
 
       assert.equal(e.property('since').value, 'now');
 
@@ -95,5 +95,4 @@ describe('Graph', function() {
       assert.equal(v2.inEdges.get('likes').values().next().value, e);
     });
   });
-
 });
